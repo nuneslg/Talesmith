@@ -28,7 +28,7 @@ const ChatPage = () => {
   }, [messages]);
 
   return (
-    <div className="min-h-screen bg-[url('/bg.png')] bg-cover bg-center flex flex-col justify-between p-4">
+    <div className="min-h-screen bg-[url('images/background.png')] bg-cover bg-center flex flex-col justify-between p-4">
       <h1 className="text-4xl text-orange-400 font-serif text-center mb-4">Talesmith</h1>
 
       <div className="flex flex-col overflow-y-auto gap-2 mb-4 max-h-[70vh] px-2">
