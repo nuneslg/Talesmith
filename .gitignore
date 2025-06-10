@@ -1,6 +1,8 @@
 # ENVORIMENT VARIABLES
 .env
 
+# ** GITIGNORE GLOBAL **
+.venv
 
 # ** GITIGNORE FRONT-END **
 node_modules/
