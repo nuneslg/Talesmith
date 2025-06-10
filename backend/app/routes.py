@@ -1,15 +1,18 @@
-from flask import Blueprint, request, jsonify
-from .gemini_service import ask_gemini
+from flask import request, jsonify
+from .gemini_service import obter_resposta_do_mestre
 
-main = Blueprint('main', __name__)
+def init_routes(app):
+    @app.route('/api/cena-inicial', methods=['POST'])
+    def cena_inicial():
+        data = request.json
+        contexto = data.get('contexto', '')
+        resposta = obter_resposta_do_mestre(contexto)
+        return jsonify({'resposta': resposta})
 
-@main.route('/api/rpg', methods=['POST'])
-def rpg_interaction():
-    data = request.get_json()
-    user_message = data.get('message', '')
-
-    if not user_message:
-        return jsonify({'error': 'No message provided'}), 400
-
-    response = ask_gemini(user_message)
-    return jsonify({'response': response})
+    @app.route('/api/acao-jogador', methods=['POST'])
+    def acao_jogador():
+        data = request.json
+        contexto = data.get('contexto', '')
+        acao = data.get('acao', '')
+        resposta = obter_resposta_do_mestre(contexto, acao)
+        return jsonify({'resposta': resposta})
