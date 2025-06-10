@@ -93,14 +93,15 @@ venv\Scripts\activate        # Windows
 ```
 
 3. Instale as dependências:
+- No diretório do backend:
 ```bash
 pip install -r requirements.txt
 ```
 
 4. Execute a aplicação localmente:
+- No diretório do backend
 ```bash
 python run.py
 ```
-A aplicação estará disponível em http://localhost:5000
 
 

@@ -34,7 +34,7 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 # Configure as variáveis de ambiente em .env
-flask run
+python run.py
 ```
 
 ### Frontend
