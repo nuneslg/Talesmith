@@ -31,5 +31,3 @@ def main():
 
         print("\nAventura encerrada!")
 
-if __name__ == "__main__":
-    main()
