@@ -15,13 +15,18 @@ genai.configure(api_key=GOOGLE_API_KEY)
 MODEL_NAME = 'models/gemini-2.0-flash'
 model = genai.GenerativeModel(MODEL_NAME)
 
-def obter_resposta_do_mestre(prompt):
-    """Envia um prompt para o Gemini e retorna a resposta."""
+def obter_resposta_do_mestre(prompt_do_jogador):
+    """Envia o prompt com as regras do jogo para o Gemini e retorna a resposta."""
     try:
-        response = model.generate_content(prompt)
+        # Combina as regras com o prompt do jogador
+        prompt_completo = f"{regras_do_jogo().strip()}\n\n[JOGADOR]: {prompt_do_jogador}"
+        
+        # Envia para o modelo
+        response = model.generate_content(prompt_completo)
         return response.text
     except Exception as e:
         return f"Ocorreu um erro ao gerar a resposta: {e}"
+
 
 def regras_do_jogo():
     return """
