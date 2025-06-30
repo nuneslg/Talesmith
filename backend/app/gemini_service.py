@@ -15,24 +15,30 @@ genai.configure(api_key=GOOGLE_API_KEY)
 MODEL_NAME = 'models/gemini-2.0-flash'
 model = genai.GenerativeModel(MODEL_NAME)
 
-def obter_resposta_do_mestre(prompt_do_jogador):
-    """Envia o prompt com as regras do jogo para o Gemini e retorna a resposta."""
+def obter_resposta_do_mestre(contexto, acao=None):
+    """Envia um prompt para o Gemini e retorna a resposta."""
+    prompt = regras_do_jogo() + "\n" + contexto
+    if acao:
+        prompt += f"\nAção do jogador: {acao}"
     try:
-        # Combina as regras com o prompt do jogador
-        prompt_completo = f"{regras_do_jogo().strip()}\n\n[JOGADOR]: {prompt_do_jogador}"
-        
-        # Envia para o modelo
-        response = model.generate_content(prompt_completo)
+        response = model.generate_content(prompt)
         return response.text
     except Exception as e:
         return f"Ocorreu um erro ao gerar a resposta: {e}"
 
-
 def regras_do_jogo():
     return """
-    **INSTRUÇÕES PARA A RESPOSTA:**
-    - A resposta DEVE ser em formato de 3 linhas.
-    - A resposta NÃO PODE exceder 100 palavras.
-    - A resposta do jogador deve ser analisada e caso seja uma ação considerada "absurda" pela API, a dificuldade da rolagem será 25, sendo que o dado só tem 20 lados, logo tornando impossível a ação.
-    - O Jogador sempre começa no nível 1 e limite máximo é nível 20.
+    **REGRAS DO JOGO:**
+    - O jogador começa no nível 1. O nível máximo é 20.
+    - Você é o Mestre do Jogo (DM). Guie a narrativa de forma imersiva e responsiva às ações do jogador.
+    - Considere as implicações lógicas das ações do jogador no mundo.
+    - Se a ação do jogador for muito ambiciosa ou absurda para o contexto atual, você pode impor uma dificuldade de 25 para a rolagem, tornando-a impossível com um d20.
+    - Mantenha um tom adequado ao gênero da aventura (ex: fantasia épica, terror, ficção científica).
+
+    **INSTRUÇÕES PARA A RESPOSTA DO MESTRE:**
+    - A resposta DEVE ser em **3 linhas**.
+    - O primeiro parágrafo descreve o resultado da ação do jogador.
+    - O segundo parágrafo detalha as consequências ou novas informações no cenário.
+    - O terceiro parágrafo apresenta as opções ou a próxima pergunta para o jogador.
+    - A resposta NÃO PODE exceder 150 palavras no total para manter o ritmo.
     """

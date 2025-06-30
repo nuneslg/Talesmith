@@ -6,29 +6,56 @@ const ChatPage = () => {
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [userTurn, setUserTurn] = useState(true)
+  const [userTurn, setUserTurn] = useState(true);
+  const [modo, setModo] = useState("contexto");
   const messagesEndRef = useRef(null);
 
   const sendMessage = () => {
     if (!input.trim() || !userTurn) return;
 
-    const newMessage = { author: "user", text: input, time: formatTime()};
+    const newMessage = { author: "user", text: input, time: formatTime() };
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
-    setUserTurn(false)
+    setUserTurn(false);
 
-    setTimeout(() => {
-      const response = {
-        author: "ia",
-        text: `A IA ouviu: "${newMessage.text}" e em breve vai reagir!`,
-        time: formatTime()
-      };
+    const payload =
+      modo === "contexto"
+        ? { contexto: input }
+        : { contexto: messages.map((m) => m.text).join("\n"), acao: input };
 
-      console.log(response.time)
-      setMessages((prev) => [...prev, response]);
-      setUserTurn(true)
-    }, 1000);
-  };
+    const url =
+      modo === "contexto"
+        ? "http://localhost:5000/api/cena-inicial"
+        : "http://localhost:5000/api/acao-jogador";
+
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const response = {
+          author: "ia",
+          text: data.resposta,
+          time: formatTime(),
+        };
+        setMessages((prev) => [...prev, response]);
+        setUserTurn(true);
+        if (modo === "contexto") setModo("acao"); // muda modo
+      })
+      .catch((error) => {
+        console.error("Erro ao chamar backend:", error);
+        const response = {
+          author: "ia",
+          text: "Erro na comunicação com o servidor.",
+          time: formatTime(),
+        };
+        setMessages((prev) => [...prev, response]);
+        setUserTurn(true);
+      });
+};
+
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
