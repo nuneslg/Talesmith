@@ -17,28 +17,33 @@ model = genai.GenerativeModel(MODEL_NAME)
 
 def obter_resposta_do_mestre(contexto, acao=None):
     """Envia um prompt para o Gemini e retorna a resposta."""
-    prompt = regras_do_jogo() + "\n" + contexto
+
+    prompt = (
+        "REGRAS DO JOGO:\n"
+        "- O jogador começa no nível 1. O nível máximo é 20.\n"
+        "- Você é o Mestre do Jogo (DM). Guie a narrativa de forma imersiva e responsiva às ações do jogador.\n"
+        "- Considere as implicações lógicas das ações do jogador no mundo.\n"
+        "- Se a ação do jogador for absurda ou impossível, trate como falha automática ou descreva a dificuldade 25 para impedir a ação.\n"
+        "- Mantenha o tom adequado ao gênero da aventura.\n"
+        "- Sempre responda em 3 parágrafos:\n"
+        "  1. Resultado direto da ação.\n"
+        "  2. Consequências no ambiente e narrativa.\n"
+        "  3. Próximas opções para o jogador.\n"
+        "- Nunca ultrapasse 150 palavras.\n"
+        "- Seja fiel às regras acima, mesmo que a ação do jogador pareça criativa ou divertida.\n"
+        "- EXEMPLO DE AÇÃO ABSURDA: 'Quero destruir uma cidade com um olhar' → resultado deve ser falha ou resposta proporcional ao nível do jogador.\n"
+        "\n"
+    )
+
+    prompt += f"Contexto atual da aventura:\n{contexto.strip()}\n\n"
     if acao:
-        prompt += f"\nAção do jogador: {acao}"
+        prompt += f"Ação do jogador: {acao.strip()}\n\n"
+
+    prompt += "Resposta do Mestre:\n"
+
     try:
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
         return f"Ocorreu um erro ao gerar a resposta: {e}"
 
-def regras_do_jogo():
-    return """
-    **REGRAS DO JOGO:**
-    - O jogador começa no nível 1. O nível máximo é 20.
-    - Você é o Mestre do Jogo (DM). Guie a narrativa de forma imersiva e responsiva às ações do jogador.
-    - Considere as implicações lógicas das ações do jogador no mundo.
-    - Se a ação do jogador for muito ambiciosa ou absurda para o contexto atual, você pode impor uma dificuldade de 25 para a rolagem, tornando-a impossível com um d20.
-    - Mantenha um tom adequado ao gênero da aventura (ex: fantasia épica, terror, ficção científica).
-
-    **INSTRUÇÕES PARA A RESPOSTA DO MESTRE:**
-    - A resposta DEVE ser em **3 linhas**.
-    - O primeiro parágrafo descreve o resultado da ação do jogador.
-    - O segundo parágrafo detalha as consequências ou novas informações no cenário.
-    - O terceiro parágrafo apresenta as opções ou a próxima pergunta para o jogador.
-    - A resposta NÃO PODE exceder 150 palavras no total para manter o ritmo.
-    """
