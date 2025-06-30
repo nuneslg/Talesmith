@@ -3,7 +3,7 @@
 
 # ** GITIGNORE GLOBAL **
 .venv
-venv
+venv/
 # ** GITIGNORE FRONT-END **
 node_modules/
 build/
