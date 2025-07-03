@@ -24,6 +24,7 @@ def obter_resposta_do_mestre(contexto, acao=None):
         "- Você é o Mestre do Jogo (DM). Guie a narrativa de forma imersiva e responsiva às ações do jogador.\n"
         "- Considere as implicações lógicas das ações do jogador no mundo.\n"
         "- Se a ação do jogador for absurda ou impossível, trate como falha automática ou descreva a dificuldade 25 para impedir a ação.\n"
+        "- A resposta DEVE conter: 'Sua força não é suficiente para isso' se a ação for impossível.\n"
         "- Mantenha o tom adequado ao gênero da aventura.\n"
         "- Sempre responda em 3 parágrafos:\n"
         "  1. Resultado direto da ação.\n"
