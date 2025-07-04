@@ -1,68 +1,91 @@
-# 🏗️ Manual do Desenvolvedor - Talesmith
+# 🛠️ Talesmith – Developer Manual
 
-> Documento técnico com foco na **arquitetura do sistema** e as **principais responsabilidades funcionais** do projeto.
+## 📖 Visão Geral
 
-## 🧱 1. Arquitetura do Sistema
+Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-playing game) por meio de uma LLM (Large Language Model). Os jogadores interagem com uma interface amigável que traduz suas ações e escolhas em eventos narrativos dinâmicos conduzidos por IA.
 
-### Tipo de Arquitetura:
-- [ ] Monolítica em camadas
+---
 
-### Diagrama de Arquitetura (simplificado):
+## 🧱 Arquitetura do Projeto
 
-```plaintext
-[Frontend] <--> [Flask] <--> [Backend] <--> [Banco de Dados]
+### Arquitetura geral: **Um monólito modularizado - Frontend + Backend desacoplados (client-server)**
 
 ```
+[ React Frontend ]  <-->  [ Flask API Backend ]  <-->  [ Gemini LLM (via API) ]
+        |                            |
+     Usuário                     Processamento
+     (input/output)             de comandos e lógica
+```
 
-### Componentes Principais:
-| Componente          | Tecnologia                     | Responsabilidade                             |
-|---------------------|--------------------------------|----------------------------------------------|
-| Frontend            | React / Node.js                | Interface com o usuário final                |
-| Backend/API         | Python / Gemini LLM / Flask    | Lógica funcionamento da API e rotas          |
-| Banco de Dados      |               -/-              |                      -/-                     |
-
-
----
-
-## 🧩 2. Módulos/Funções do Projeto
-
-### 📂 Módulo: Autenticação
-- Registro, login, logout
-
-### 📂 Módulo: Rolagem de dados
-- Determina a sorte do jogador ao realizar uma ação
+- **Frontend (React/Node.js)**: Responsável por renderizar a interface e capturar interações do jogador.
+- **Backend (Flask/Python)**: Faz a ponte entre o frontend e a LLM. Recebe os comandos do jogador, envia à LLM e retorna as respostas narrativas.
+- **Gemini (LLM)**: Gera a narrativa com base no contexto do jogo e nas ações do jogador.
 
 ---
 
-## 🧰 3. Tecnologias Utilizadas
+## 🧰 Tecnologias Utilizadas
 
-| Categoria             | Ferramenta/Stack                         |
-|-----------------------|------------------------------------------|
-| Frontend              | React, Node.js                           |
-| Backend               | Python, Flask, Integração com Gemini LLM |
-| Banco de Dados        |                     -/-                  |
+### Backend
+- **Python 3.10+**
+- **Flask** – Framework leve para criação da API.
+- **Gemini API** – Integração com modelo de linguagem da Google.
 
-
----
-
-## 👥 4. Equipe Técnica
-
-| Nome            | Função                            | Contato                   |
-|-----------------|-----------------------------------|---------------------------|
-| Matheus Aléfe   | Frontend Manager                  | mabs2@cin.ufpe.br         |
-| Maycon Otávio   | Frontend Developer                | mobs@cin.ufpe.br          |
-| Giovanna Bardi  | Frontend Developer / PO           | gmcb@cin.ufpe.br          |
-| Luís Ghuilherme | Backend Manager / DevOps          | igmmn@cin.ufpe.br         |
-| Lucas Matheus   | Backend Developer                 | lmsf@cin.ufpe.br          |
-| Romero Rego     | Backend Developer                 | rrcf@cin.ufpe.br          |
-| Sérgio Lima     | Backend Developer / Documentation | stcml@cin.ufpe.br         |
+### Frontend
+- **React** – Framework SPA para a interface do usuário.
+- **Node.js 18+ / npm** – Ambiente para executar e gerenciar pacotes.
 
 ---
 
-## 📄 5. Licença
+## 📦 Estrutura dos Diretórios
 
-Este projeto está licenciado sob a licença MIT.  
+```plaintext
+/
+├── backend/
+│   ├── app/               # Código principal do backend
+│   ├── routes/            # Rotas Flask
+│   ├── services/          # Integração com a LLM
+│   ├── .env               # Variáveis de ambiente
+│   └── run.py             # Ponto de entrada do backend
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/    # Componentes React
+│   │   ├── pages/         # Páginas principais
+│   │   ├── services/      # Comunicação com API
+│   │   └── App.jsx        # Componente principal
+│
+├── README.md
+├── DEVELOPERMANUAL.md
+├── TESTING.md
+└── CONTRIBUTING.md
+```
 
 ---
 
-> Última atualização: `01/07/2025`
+## 📌 Funcionalidades Principais
+
+- Início de aventuras com prompts customizados.
+- Narração interativa via LLM.
+- Histórico da história e contexto mantidos pelo backend.
+- Comunicação assíncrona entre frontend e backend.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+Veja o arquivo `README.md` para saber como executar o projeto.
+
+---
+
+## 🧪 Testes
+
+Veja o arquivo `TESTING.md` para saber como executar testes unitários e manuais.
+
+---
+
+## 🤝 Contribuição
+
+Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
+
+---
+Atualizado pela ultima vez em 04/07/2025
