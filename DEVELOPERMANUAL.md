@@ -8,7 +8,7 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ## 🧱 Arquitetura do Projeto
 
-### Arquitetura geral: **Um monólito modularizado - Frontend + Backend desacoplados (client-server)**
+### Arquitetura geral: **Um monolítica em camadas - Frontend + Backend desacoplados (client-server)**
 
 ```
 [ React Frontend ]  <-->  [ Flask API Backend ]  <-->  [ Gemini LLM (via API) ]
@@ -62,12 +62,30 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 📌 Funcionalidades Principais
+## 📌 Descrição das funções principais
 
-- Início de aventuras com prompts customizados.
-- Narração interativa via LLM.
-- Histórico da história e contexto mantidos pelo backend.
-- Comunicação assíncrona entre frontend e backend.
+- 📂**BACK/ Chamada da API do Gemini: gemini_service.py**
+
+          obter_resposta_do_mestre(): Monta um prompt com regras de RPG e o contexto da história, o enviando para a API do gemini.
+
+Retorna o texto gerado como resposta da IA. Se houver erro na chamada da API, uma mensagem de erro personalizada é retornada.
+
+- 📂**BACK/ Receber contexto inicial e ações do jogador: routes.py**
+
+          cena-inicial(): recebe um contexto via POST e envia esse contexto para a LLM, que retorna a introdução da narrativa.
+
+          acao-jogador(): recebe contexto e acao e retorna a continuação da história com base neles.
+
+Ambas as rotas usam a função obter_resposta_do_mestre() para gerar o texto narrativo e devolvem a resposta em formato JSON. Essas rotas são integradas à aplicação Flask pela função init_routes(app).
+
+- 📂**FRONT/ Interação direta com o jogador: ChatPage.jsx**
+          
+          sendMessage(): checa entre modo contexto e modo ação, controla o turno do usuário e envia o POST para o back.
+
+          useEffect(): automaticamente scrolla a pagina para baixo quando é enviada uma mensagem
+          obs:. estes se encontram em chatpage{}
+
+Retorna a estrutura e conteudos da pagina
 
 ---
 
