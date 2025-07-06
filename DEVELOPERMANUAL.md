@@ -94,7 +94,11 @@ Retorna a estrutura e conteudos da pagina
 Veja o arquivo `README.md` para saber como executar o projeto.
 
 ---
+## 🔬 Testes
 
+Veja o arquivo `TESTES.md` para saber como realizar os testes.
+
+---
 ## 🤝 Contribuição
 
 Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
