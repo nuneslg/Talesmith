@@ -96,7 +96,7 @@ Veja o arquivo `README.md` para saber como executar o projeto.
 ---
 ## 🔬 Testes
 
-Veja o arquivo `TESTES.md` para saber como realizar os testes.
+Veja o arquivo `TESTING.md` para saber como realizar os testes.
 
 ---
 ## 🤝 Contribuição
@@ -104,4 +104,4 @@ Veja o arquivo `TESTES.md` para saber como realizar os testes.
 Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
 
 ---
-Atualizado pela ultima vez em 04/07/2025
+Atualizado pela ultima vez em 06/07/2025
