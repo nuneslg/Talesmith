@@ -95,12 +95,6 @@ Veja o arquivo `README.md` para saber como executar o projeto.
 
 ---
 
-## 🧪 Testes
-
-Veja o arquivo `TESTING.md` para saber como executar testes unitários e manuais.
-
----
-
 ## 🤝 Contribuição
 
 Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
