@@ -73,3 +73,48 @@ start .\htmlcov\index.html
 ---
 
 ## Frontend
+
+### Ferramenta Utilizada
+
+- [Vitest](https://vitest.dev/): para testes unitários e de componentes no frontend React.
+
+### Estrutura de Testes
+
+- Os testes do frontend ficam próximos aos componentes, geralmente em arquivos com o sufixo `.test.jsx` ou `.test.js` dentro de `src/`.
+- Testes de componentes podem utilizar utilitários como [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/) para simular interações e verificar renderização.
+
+### O que está sendo testado
+
+- Renderização dos componentes principais (ex: `ChatPage`, `ChatBubble`).
+- Comportamento do input e envio de mensagens.
+- Exibição correta das mensagens do usuário e da IA.
+- Testes de estados e props dos componentes.
+- Mock de chamadas à API usando mocks do axios.
+
+### Rodando os testes
+
+- Para rodar todos os testes do frontend:
+
+```bash
+npm run test
+```
+ou
+```bash
+npx vitest
+```
+
+- Para rodar em modo watch (reexecuta ao salvar):
+
+```bash
+npx vitest --watch
+```
+
+### Cobertura de Testes
+
+- Para gerar relatório de cobertura:
+
+```bash
+npx vitest --coverage
+```
+
+O relatório será exibido no terminal e salvo na pasta `coverage/`.
