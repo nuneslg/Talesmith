@@ -11,7 +11,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
+*.db
 
 # ** GITIGNORE BACK-END **
 __pycache__/
