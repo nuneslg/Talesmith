@@ -1,6 +1,7 @@
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+import random
 
 load_dotenv() # Carrega as variáveis de ambiente do arquivo .env
 
@@ -14,6 +15,16 @@ genai.configure(api_key=GOOGLE_API_KEY)
 # Tentar com o modelo 'models/gemini-2.0-flash'
 MODEL_NAME = 'models/gemini-2.0-flash'
 model = genai.GenerativeModel(MODEL_NAME)
+
+def rolar_d20():
+    """
+    Rola um dado de 20 lados e retorna o resultado.
+    Exibe o resultado no console.
+    """
+    print("\nOs dados estão sendo rolados... Boa sorte!")
+    resultado = random.randint(1, 20)
+    print(f"Resultado do dado: {resultado}")
+    return resultado
 
 def obter_resposta_do_mestre(contexto, acao=None):
     """Envia um prompt para o Gemini e retorna a resposta."""
@@ -37,14 +48,24 @@ def obter_resposta_do_mestre(contexto, acao=None):
     )
 
     prompt += f"Contexto atual da aventura:\n{contexto.strip()}\n\n"
-    if acao:
+
+
+    # Verifica se uma ação foi fornecida para rolagem de dados
+    if acao and acao.strip(): # Garante que a ação não é vazia ou apenas espaços
+        resultado_dado = rolar_d20() # Rola o dado D20
+        prompt += f"Ação do jogador: {acao.strip()}\n"
+        prompt += f"Resultado da rolagem de dado (D20): {resultado_dado}\n\n" # Adiciona o resultado ao prompt
+    elif acao is not None: # Se 'acao' foi fornecido mas está vazio, ainda o inclui no prompt
         prompt += f"Ação do jogador: {acao.strip()}\n\n"
 
     prompt += "Resposta do Mestre:\n"
 
     try:
         response = model.generate_content(prompt)
-        return response.text
+        texto_da_resposta = response.text
+        with open ("arquivo_log.txt", 'w') as arq:
+            arq.write(texto_da_resposta)
+        return texto_da_resposta
     except Exception as e:
         return f"Ocorreu um erro ao gerar a resposta: {e}"
 
