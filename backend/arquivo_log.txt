@@ -1,0 +1,12 @@
+Dificuldade da sua ação: 15
+Resultado da Rolagem de dados: 6
+Tipo de resultado: FALHA
+
+Você soca a porta com força, mas o metal frio e resistente nem sequer estremece. Uma dor lancinante irradia da sua mão.
+
+Sua mão está machucada e latejando. O guarda do outro lado da porta grita: "Cale a boca aí dentro, verme!"
+
+Próximas opções:
+1. Examinar a cela em busca de algo útil.
+2. Gritar por ajuda.
+3. Tentar arrombar a fechadura da porta.
