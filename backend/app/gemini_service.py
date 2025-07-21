@@ -44,6 +44,9 @@ def obter_resposta_do_mestre(contexto, acao=None):
 
     try:
         response = model.generate_content(prompt)
+        texto_da_resposta = response.text
+        with open ("arquivo_log.txt", 'w') as arq:
+            arq.write(texto_da_resposta)
         return response.text
     except Exception as e:
         return f"Ocorreu um erro ao gerar a resposta: {e}"
