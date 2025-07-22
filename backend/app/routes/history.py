@@ -12,7 +12,13 @@ def criar_historia():
         contexto=data.get('contexto'),
         usuario_id=data.get('usuario_id'),
         nome_personagem=data.get('nome_personagem'), #aqui
-        atributos_personagem=data.get('atributos_personagem') #aqui
+        forca_personagem=data.get('forca_personagem'), #aqui
+        percepcao_personagem=data.get('percepcao_personagem'), #aqui
+        inteligencia_personagem=data.get('inteligencia_personagem'), #aqui
+        sorte_personagem=data.get('sorte_personagem'), #aqui
+        carisma_personagem=data.get('carisma_personagem'), #aqui
+        resistencia_personagem=data.get('resistencia_personagem'), #aqui
+        agilidade_personagem=data.get('agilidade_personagem') #aqui
     )
 
     db.session.add(nova_historia)
