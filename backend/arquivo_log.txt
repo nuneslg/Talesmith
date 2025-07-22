@@ -1,5 +1,12 @@
-A sede por vingança inflama seu espírito, obscurecendo a dor e o medo. Você decide que sua prioridade é encontrar e confrontar o responsável pela sua queda, não importa o custo. A ravina, que antes parecia uma rota de fuga, agora se torna um caminho a ser ignorado.
+Dificuldade da sua aÃ§Ã£o: 15
+Resultado da Rolagem de dados: 6
+Tipo de resultado: FALHA
 
-A fúria te impulsiona a se levantar, ignorando os protestos do seu corpo. Cada passo é um lembrete da dor, mas a determinação em encontrar seu algoz te mantém em movimento. Você começa a escalar de volta para o topo da montanha, seus olhos fixos no objetivo.
+VocÃª soca a porta com forÃ§a, mas o metal frio e resistente nem sequer estremece. Uma dor lancinante irradia da sua mÃ£o.
 
-A subida é íngreme e perigosa, exigindo cada grama de sua força. A cada passo, você se aproxima do seu objetivo, mas também se expõe a novos perigos. No topo, o que espera por você: o seu agressor, uma armadilha, ou a verdade sobre o que realmente aconteceu?
+Sua mÃ£o estÃ¡ machucada e latejando. O guarda do outro lado da porta grita: "Cale a boca aÃ­ dentro, verme!"
+
+PrÃ³ximas opÃ§Ãµes:
+1. Examinar a cela em busca de algo Ãºtil.
+2. Gritar por ajuda.
+3. Tentar arrombar a fechadura da porta.
