@@ -10,6 +10,8 @@ class Historia(db.Model):
     contexto = db.Column(db.Text)  # Contexto inicial da história (como o formulário de inicio)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     criada_em = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    nome_personagem = db.Column(db.String(50))#aqui
+    atributos_personagem = db.Column(db.JSON)#aqui
 
     mensagens = db.relationship('Mensagem', backref='historia', lazy=True)
 

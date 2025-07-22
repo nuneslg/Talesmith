@@ -68,7 +68,7 @@ def obter_resposta_do_mestre(contexto, acao=None):
 
     prompt += "Resposta do Mestre (siga exatamente o formato especificado nas regras):\n"
 
-    try:
+     try:
         response = model.generate_content(prompt)
         texto_da_resposta = response.text
         with open("arquivo_log.txt", 'w') as arq:
