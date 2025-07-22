@@ -22,12 +22,26 @@ function RPGConfig() {
   }
 
 
+
   const handleSubmit = (e) => {
-    e.preventDefault()
-    // Aqui você pode armazenar no localStorage ou em contexto
-    console.log('Configuração do jogo:', form)
-    navigate('/chat')
-  }
+    e.preventDefault();
+  // 1. Pega a lista de histórias que já existem no navegador
+  const historiasAtuais = JSON.parse(localStorage.getItem('rpg_historias')) || [];
+  // 2. Cria a nova história com os dados do formulário e um ID único
+  const novaHistoria = {
+    ...form, // Copia todos os dados do formulário (personagem, classe, etc.)
+    id: Date.now() // Cria um ID único baseado na data e hora atuais
+  };
+  // 3. Adiciona a nova história à lista
+  const novasHistorias = [...historiasAtuais, novaHistoria];
+  // 4. Salva a lista atualizada de volta no navegador
+  localStorage.setItem('rpg_historias', JSON.stringify(novasHistorias));
+
+  console.log('História salva com sucesso!', novaHistoria);
+
+  navigate('/chat');
+};
+
 
 
   return (
