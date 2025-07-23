@@ -2,65 +2,112 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import fundo from './MadeiraFundo.jpg'
 
-
 function RPGConfig() {
   const navigate = useNavigate()
 
-
   const [form, setForm] = useState({
-    personagem: '',
+    titulo: '',
+    nome: '',
+    raca: '',
     classe: '',
-    ambientacao: '',
-    tom: '',
-    objetivo: '',
+    nivel: '',
+    forca: '',
+    destreza: '',
+    constituicao: '',
+    sabedoria: '',
+    inteligencia: '',
+    carisma: '',
+    historia: '',
   })
-
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm({ ...form, [name]: value })
   }
 
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Aqui você pode armazenar no localStorage ou em contexto
     console.log('Configuração do jogo:', form)
     navigate('/chat')
   }
 
+  const renderSelect = (name, label) => (
+    <div>
+      <label className="block text-lg mb-1">{label}</label>
+      <select
+        name={name}
+        value={form[name]}
+        onChange={handleChange}
+        className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
+      >
+        <option value="">Selecione</option>
+        {[...Array(20)].map((_, i) => (
+          <option key={i + 1} value={i + 1}>
+            {i + 1}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
 
   return (
-    <div className="min-h-screen text-white flex items-center justify-center px-4 py-12"
-    style={{
-      backgroundImage: `url(${fundo})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}>
-     
+    <div
+      className="min-h-screen text-white flex items-center justify-center px-4 py-12"
+      style={{
+        backgroundImage: `url(${fundo})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <form
         onSubmit={handleSubmit}
         className="bg-[#4B3621] p-8 rounded-2xl shadow-xl w-full max-w-2xl space-y-6"
       >
-        <h1 className="text-3xl font-bold text-center">Crie sua Aventura</h1>
+        <h1 className="text-3xl font-bold text-center">Crie seu Personagem</h1>
 
-
+        {/* Título */}
         <div>
-            <label className="block text-lg mb-1">Quem é seu personagem?</label>
-            <textarea
-                name="personagem"
-                value={form.personagem}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
-                placeholder="Ex: Um elfo arqueiro, uma princesa rebelde..."
-                rows={4}  // você pode ajustar a quantidade de linhas visíveis aqui
-            />
+          <label className="block text-lg mb-1">Qual é o título do personagem?</label>
+          <textarea
+            name="titulo"
+            value={form.titulo}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
+            placeholder="Ex: O Bravo, A Sábia..."
+            rows={2}
+          />
         </div>
 
-
+        {/* Nome */}
         <div>
-          <label className="block text-lg mb-1">Qual a classe do personagem?</label>
+          <label className="block text-lg mb-1">Qual é o nome do personagem?</label>
+          <textarea
+            name="nome"
+            value={form.nome}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
+            placeholder="Ex: Arion, Lyra..."
+            rows={2}
+          />
+        </div>
+
+        {/* Raça */}
+        <div>
+          <label className="block text-lg mb-1">Qual é a raça do personagem?</label>
+          <textarea
+            name="raca"
+            value={form.raca}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
+            placeholder="Ex: Humano, Elfo, Anão..."
+            rows={2}
+          />
+        </div>
+
+        {/* Classe */}
+        <div>
+          <label className="block text-lg mb-1">Qual é a classe do personagem?</label>
           <select
             name="classe"
             value={form.classe}
@@ -76,50 +123,29 @@ function RPGConfig() {
           </select>
         </div>
 
+        {/* Nível */}
+        {renderSelect('nivel', 'Qual é o nível do personagem?')}
 
+        {/* Atributos */}
+        {renderSelect('forca', 'Qual é a força do personagem?')}
+        {renderSelect('destreza', 'Qual é a destreza do personagem?')}
+        {renderSelect('constituicao', 'Qual é a constituição do personagem?')}
+        {renderSelect('sabedoria', 'Qual é a sabedoria do personagem?')}
+        {renderSelect('inteligencia', 'Qual é a inteligência do personagem?')}
+        {renderSelect('carisma', 'Qual é o carisma do personagem?')}
+
+        {/* História */}
         <div>
-            <label className="block text-lg mb-1">Onde a história acontece?</label>
-            <textarea
-                name="ambientacao"
-                value={form.ambientacao}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
-                placeholder="Ex: Reino gelado, cidade cyberpunk, floresta mística..."
-                rows={4}
-            />
-        </div>
-
-
-        <div>
-          <label className="block text-lg mb-1">Qual o tom da aventura?</label>
-          <select
-            name="tom"
-            value={form.tom}
+          <label className="block text-lg mb-1">Qual é a história do personagem?</label>
+          <textarea
+            name="historia"
+            value={form.historia}
             onChange={handleChange}
             className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none"
-          >
-            <option value="">Selecione</option>
-            <option>Épico</option>
-            <option>Cômico</option>
-            <option>Terror</option>
-            <option>Misterioso</option>
-            <option>Romântico</option>
-          </select>
+            placeholder="Conte a origem e os detalhes importantes..."
+            rows={5}
+          />
         </div>
-
-
-        <div>
-          <label className="block text-lg mb-1">Qual o objetivo do personagem?</label>
-          <textarea
-            name="objetivo"
-            value={form.objetivo}
-            onChange={handleChange}
-            className="w-full px-4 py-2 rounded bg-[#6D4C41] text-white focus:outline-none resize-none"
-            placeholder="Ex: Salvar o reino, encontrar um artefato, fugir de uma maldição..."
-            rows={3}
-            />
-        </div>
-
 
         <button
           type="submit"
@@ -132,7 +158,4 @@ function RPGConfig() {
   )
 }
 
-
 export default RPGConfig
-
-
