@@ -25,12 +25,6 @@ function RPGConfig() {
     setForm({ ...form, [name]: value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Configuração do jogo:', form)
-    navigate('/chat')
-  }
-
   const renderSelect = (name, label) => (
     <div>
       <label className="block text-lg mb-1">{label}</label>
@@ -49,6 +43,46 @@ function RPGConfig() {
       </select>
     </div>
   )
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // ✅ Montando payload no formato do backend
+    const payload = {
+      titulo: form.titulo,
+      contexto: form.historia,
+      usuario_id: usuarioId,
+      nome_personagem: form.nome,
+      forca_personagem: form.forca,
+      percepcao_personagem: form.sabedoria,
+      inteligencia_personagem: form.inteligencia,
+      sorte_personagem: form.nivel,
+      carisma_personagem: form.carisma,
+      resistencia_personagem: form.constituicao,
+      agilidade_personagem: form.destreza
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/historias/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      const result = await response.json()
+      console.log('Resposta do servidor:', result)
+
+      if (response.ok) {
+        navigate('/chat')
+      } else {
+        alert('Erro ao salvar: ' + result.error)
+      }
+    } catch (error) {
+      console.error('Erro na requisição:', error)
+    }
+  }
 
   return (
     <div
