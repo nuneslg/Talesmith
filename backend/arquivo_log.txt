@@ -1,12 +1,12 @@
-Dificuldade da sua aÃ§Ã£o: 15
-Resultado da Rolagem de dados: 6
-Tipo de resultado: FALHA
+Dificuldade da sua ação: 15
+Resultado da Rolagem de dados: 8
 
-VocÃª soca a porta com forÃ§a, mas o metal frio e resistente nem sequer estremece. Uma dor lancinante irradia da sua mÃ£o.
+Você tenta um armlock voador, um movimento arriscado demais para seu nível. Desequilibra-se, caindo desajeitadamente no tatame. Mestre Honório suspira.
 
-Sua mÃ£o estÃ¡ machucada e latejando. O guarda do outro lado da porta grita: "Cale a boca aÃ­ dentro, verme!"
+Você sente uma dor aguda no ombro. (Punição: -2 pontos de vida. Nível de dor aumenta). O Mestre se aproxima, o olhar mais sério agora. "A ambição é boa, mas a paciência é fundamental. Jiu-Jitsu é construído sobre fundamentos sólidos."
 
-PrÃ³ximas opÃ§Ãµes:
-1. Examinar a cela em busca de algo Ãºtil.
-2. Gritar por ajuda.
-3. Tentar arrombar a fechadura da porta.
+**Próximas opções:**
+
+A) Desculpar-se com Mestre Honório e pedir para praticar o básico.
+B) Insistir que pode aprender movimentos avançados rapidamente.
+C) Ignorar a dor e tentar outro movimento arriscado.

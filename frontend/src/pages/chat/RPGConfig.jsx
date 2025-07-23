@@ -6,19 +6,20 @@ function RPGConfig() {
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
-    titulo: '',
-    nome: '',
-    raca: '',
-    classe: '',
-    nivel: '',
-    forca: '',
-    destreza: '',
-    constituicao: '',
-    sabedoria: '',
-    inteligencia: '',
-    carisma: '',
-    historia: '',
-  })
+  titulo: '',
+  historia: '',
+  nome: '',
+  raca: '',
+  classe: '',
+  nivel: '',
+  forca: '',
+  destreza: '',
+  constituicao: '',
+  sabedoria: '',
+  inteligencia: '',
+  carisma: '',
+  contexto_personagem: ''
+})
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -47,23 +48,27 @@ function RPGConfig() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // ✅ Montando payload no formato do backend
     const payload = {
-      titulo: form.titulo,
-      contexto: form.historia,
-      usuario_id: usuarioId,
-      nome_personagem: form.nome,
-      forca_personagem: form.forca,
-      percepcao_personagem: form.sabedoria,
-      inteligencia_personagem: form.inteligencia,
-      sorte_personagem: form.nivel,
-      carisma_personagem: form.carisma,
-      resistencia_personagem: form.constituicao,
-      agilidade_personagem: form.destreza
-    }
+    titulo: form.titulo,
+    contexto: form.historia,
+    usuario_id: 1, // substituir por ID do usuário logado
+
+    nome_personagem: form.nome,
+    raca_personagem: form.raca,
+    classe_personagem: form.classe,
+    nivel_personagem: parseInt(form.nivel),
+
+    forca_personagem: parseInt(form.forca),
+    destreza_personagem: parseInt(form.destreza),
+    constituicao_personagem: parseInt(form.constituicao),
+    sabedoria_personagem: parseInt(form.sabedoria),
+    inteligencia_personagem: parseInt(form.inteligencia),
+    carisma_personagem: parseInt(form.carisma),
+    contexto_personagem: form.contexto_personagem
+  }
 
     try {
-      const response = await fetch('http://localhost:5000/api/historias/', {
+      const responseHistoria = await fetch('http://localhost:5000/api/historias/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -71,18 +76,46 @@ function RPGConfig() {
         body: JSON.stringify(payload)
       })
 
-      const result = await response.json()
+      const result = await responseHistoria.json()
+      const historiaId = result.id
       console.log('Resposta do servidor:', result)
 
-      if (response.ok) {
-        navigate('/chat')
-      } else {
-        alert('Erro ao salvar: ' + result.error)
-      }
-    } catch (error) {
-      console.error('Erro na requisição:', error)
+       if (!responseHistoria.ok) {
+      alert('Erro ao salvar a história: ' + resultHistoria.error)
+      return
     }
+
+    // Agora faz a requisição para a cena inicial com o contexto da história
+    const responseCena = await fetch('http://localhost:5000/api/cena-inicial', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contexto: form.historia,
+        historia_id: historiaId, // envia o ID da história criada
+       }) // ou outro contexto que queira enviar
+    })
+
+    const resultCena = await responseCena.json()
+
+    if (!responseCena.ok) {
+      alert('Erro ao obter cena inicial: ' + resultCena.error)
+      return
+    }
+
+    console.log('Cena inicial:', resultCena.resposta)
+
+    
+    navigate('/chat', {
+      state: {
+      historiaId: historiaId,
+      contextoInicial: form.historia,
+      },
+    })
+
+
+  } catch (error) {
+    console.error('Erro na requisição:', error)
   }
+}
 
   return (
     <div

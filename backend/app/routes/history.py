@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.models import Historia, AtributosPersonagem
 from app.extensions import db
+from app.models.message import Mensagem
 
 historia_bp = Blueprint('historia', __name__, url_prefix='/api/historias')
 
@@ -20,15 +21,24 @@ def criar_historia():
     atributos = AtributosPersonagem(
     historia_id=nova_historia.id,
     nome=data.get('nome_personagem'),
+    raca=data.get('raca_personagem'),
+    classe=data.get('classe_personagem'),
+    nivel=data.get('nivel_personagem'),
     forca=data.get('forca_personagem'),
-    percepcao=data.get('percepcao_personagem'),
+    destreza=data.get('destreza_personagem'),
+    constituicao=data.get('constituicao_personagem'),
+    sabedoria=data.get('sabedoria_personagem'),
     inteligencia=data.get('inteligencia_personagem'),
-    sorte=data.get('sorte_personagem'),
     carisma=data.get('carisma_personagem'),
-    resistencia=data.get('resistencia_personagem'),
-    agilidade=data.get('agilidade_personagem')
+    contexto=data.get('contexto_personagem')
 )
     db.session.add(atributos)
+    mensagem_inicial = Mensagem(
+        historia_id=nova_historia.id,
+        remetente='jogador',
+        conteudo=nova_historia.contexto  # ou outro texto
+    )
+    db.session.add(mensagem_inicial)
     db.session.commit()
 
     return jsonify({
@@ -36,13 +46,16 @@ def criar_historia():
         'titulo': nova_historia.titulo,
         'atributos_personagem': {
             'nome': atributos.nome,
+            'raca': atributos.raca,
+            'classe': atributos.classe,
+            'nivel': atributos.nivel,
             'forca': atributos.forca,
-            'percepcao': atributos.percepcao,
+            'destreza': atributos.destreza,
+            'constituicao': atributos.constituicao,
+            'sabedoria': atributos.sabedoria,
             'inteligencia': atributos.inteligencia,
-            'sorte': atributos.sorte,
             'carisma': atributos.carisma,
-            'resistencia': atributos.resistencia,
-            'agilidade': atributos.agilidade
+            'contexto': atributos.contexto
         }
     }), 201
 
