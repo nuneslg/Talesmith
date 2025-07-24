@@ -1,20 +1,30 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import fundo from './MadeiraFundo.jpg' 
 
 function TelaInicial() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const userId = location.state?.userId // pega o userId do estado da navegação
   const [historias, setHistorias] = useState([]) 
 
-  useEffect(() => {
-  
-    const historiasSalvas = JSON.parse(localStorage.getItem('rpg_historias')) || []
-    setHistorias(historiasSalvas)
-  }, [])
+    useEffect(() => {
+    fetch(`http://localhost:5000/api/historias?usuario_id=${userId}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Erro ao buscar histórias')
+        return res.json()
+      })
+      .then(data => {
+        setHistorias(data)
+      })
+      .catch(err => {
+        console.error('Erro ao buscar histórias:', err)
+      })
+  }, [userId])
 
   const handleCriarNova = () => {
     // Navega para a página de criação
-    navigate('/config')
+    navigate('/config', { state: { userId } })
   }
 
  const handleCarregarHistoria = (idDaHistoria) => {
@@ -24,7 +34,7 @@ function TelaInicial() {
   if (historiaSelecionada) {
     console.log('Carregando história:', historiaSelecionada);
     
-    navigate('/chat', { state: { config: historiaSelecionada } });
+    navigate('/chat', { state: { config: historiaSelecionada, userId, isNew:false } });
   } else {
     console.error('Erro: História não encontrada!');
  
@@ -53,8 +63,8 @@ function TelaInicial() {
                 className="bg-[#6D4C41] p-4 rounded-lg flex justify-between items-center cursor-pointer hover:bg-opacity-80 transition"
               >
                 <div>
-                  <h2 className="text-xl font-semibold">{historia.personagem}</h2>
-                  <p className="text-sm text-gray-300">{historia.ambientacao}</p>
+                  <h2 className="text-xl font-semibold">{historia.titulo}</h2>
+                  <p className="text-sm text-gray-300">{historia.contexto}</p>
                 </div>
                 <span className="text-yellow-500">▶</span>
               </div>

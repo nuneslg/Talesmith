@@ -9,7 +9,3 @@ class Mensagem(db.Model):
     conteudo = db.Column(db.Text)
     criada_em = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
-
-    __table_args__ = (
-        UniqueConstraint('historia_id', 'remetente', 'conteudo', name='uq_mensagem_unica'),
-    )

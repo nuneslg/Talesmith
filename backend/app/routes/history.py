@@ -60,27 +60,20 @@ def criar_historia():
     }), 201
 
 
-@historia_bp.route('/<int:historia_id>', methods=['GET'])
-def obter_historia(historia_id):
-    historia = Historia.query.get(historia_id)
-    if not historia:
-        return jsonify({'erro': 'História não encontrada'}), 404
+@historia_bp.route('/', methods=['GET'])
+def listar_historias_por_usuario():
+    usuario_id = request.args.get('usuario_id', type=int)
+    if not usuario_id:
+        return jsonify({'erro': 'Parâmetro usuario_id é obrigatório'}), 400
     
-    atributos = historia.atributos
-    return jsonify({
-        'id': historia.id,
-        'titulo': historia.titulo,
-        'contexto': historia.contexto,
-        'usuario_id': historia.usuario_id,
-        'criada_em': historia.criada_em.isoformat(),
-        'atributos_personagem': {
-            'nome': atributos.nome,
-            'forca': atributos.forca,
-            'percepcao': atributos.percepcao,
-            'inteligencia': atributos.inteligencia,
-            'sorte': atributos.sorte,
-            'carisma': atributos.carisma,
-            'resistencia': atributos.resistencia,
-            'agilidade': atributos.agilidade
-        } if atributos else None
-    })
+    historias = Historia.query.filter_by(usuario_id=usuario_id).all()
+    resultado = []
+    for h in historias:
+        resultado.append({
+            'id': h.id,
+            'titulo': h.titulo,
+            'contexto': h.contexto,
+            'usuario_id': h.usuario_id,
+            'criada_em': h.criada_em.isoformat(),
+        })
+    return jsonify(resultado)

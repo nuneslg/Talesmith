@@ -52,7 +52,7 @@ export default function LoginPage() {
                 autoClose: 4000
             })
 
-            return navigate("/config", {state: {userId: user.id}})
+            return navigate("/historias", {state: {userId: user.id}})
         }
 
         notifications.show({

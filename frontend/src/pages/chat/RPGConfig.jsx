@@ -115,11 +115,13 @@ function RPGConfig() {
     
     navigate('/chat', {
       state: {
-      historiaId: historiaId,
-      contextoInicial: form.historia,
+        config: {
+          id: historiaId,
+          contexto: form.historia,
+        },
+        isNew: true,
       },
-    })
-
+    });
 
   } catch (error) {
     console.error('Erro na requisição:', error)

@@ -6,8 +6,12 @@ import { formatTime } from "../../utils/time";
 const ChatPage = () => {
 
   const location = useLocation();
-  console.log("Location state:", location.state);
-  const { historiaId, contextoInicial } = location.state || {};
+  const historiaId = location.state?.config?.id;
+  const contextoInicial = location.state?.config?.contexto;
+  const isNew = location.state?.isNew ?? true; 
+
+  console.log("historiaId:", historiaId);
+  console.log("contextoInicial:", contextoInicial);
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -18,9 +22,7 @@ const ChatPage = () => {
   const jaBuscouCenaInicial = useRef(false);
 
   useEffect(() => {
-    if (!historiaId || !contextoInicial) return;
-
-    
+    if (!historiaId || !contextoInicial || !isNew) return;
     if (jaBuscouCenaInicial.current) return; // se já buscou, não faz nada
 
     jaBuscouCenaInicial.current = true; // marca que já fez a requisição
@@ -56,6 +58,12 @@ const ChatPage = () => {
     setMessages(updatedMessages);
     setInput("");
     setUserTurn(false);
+
+    if (!historiaId) {
+      console.error("historiaId está indefinido, não pode enviar mensagem");
+      setUserTurn(true);
+      return;
+    }
 
     const payload =
       modo === "contexto"

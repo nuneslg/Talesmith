@@ -1,11 +1,10 @@
+Você se encontra na entrada de uma caverna escura, a brisa úmida carregando o cheiro de terra e algo mais... algo predatório. A trilha atrás de você desapareceu sob a vegetação densa.
 
-VocÃª observa o campo de batalha. A clareira Ã© cercada por Ã¡rvores densas, sem sinal de rotas de fuga fÃ¡ceis. HÃ¡ pedras soltas no chÃ£o.
+A escuridão à frente parece engolir a luz.
 
-A clareira oferece pouca cobertura alÃ©m das pedras. A floresta parece impenetrÃ¡vel.
+Consequências: A hesitação paira, mas a jornada deve continuar.
 
-O que vocÃª faz?
-1. Atacar Noxus.
-2. Defender-se.
-3. Tentar fugir.
-4. Usar as pedras.
-
+Próximas opções:
+1. Entrar na caverna.
+2. Examinar a entrada da caverna em busca de pistas.
+3. Tentar reacender a trilha atrás de você.
