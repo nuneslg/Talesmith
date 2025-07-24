@@ -1,27 +1,66 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import ChatBubble from "./_components/ChatBubble";
 import { formatTime } from "../../utils/time";
 
 const ChatPage = () => {
 
+  const location = useLocation();
+  console.log("Location state:", location.state);
+  const { historiaId, contextoInicial } = location.state || {};
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [userTurn, setUserTurn] = useState(true);
-  const [modo, setModo] = useState("contexto");
+  const [modo, setModo] = useState("acao");
   const messagesEndRef = useRef(null);
+
+  const jaBuscouCenaInicial = useRef(false);
+
+  useEffect(() => {
+    if (!historiaId || !contextoInicial) return;
+
+    
+    if (jaBuscouCenaInicial.current) return; // se já buscou, não faz nada
+
+    jaBuscouCenaInicial.current = true; // marca que já fez a requisição
+
+    console.log("🔁 Buscando cena-inicial...");
+
+    // Chama backend para primeira mensagem da IA (baseada no contexto da história)
+    fetch("http://localhost:5000/api/cena-inicial", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ historia_id: historiaId, contexto: contextoInicial }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const response = {
+          author: "ia",
+          text: data.resposta,
+          time: formatTime(),
+        };
+        setMessages([response]); // inicia só com essa mensagem
+        setUserTurn(true);
+      })
+      .catch((err) => {
+        console.error("Erro no backend:", err);
+      });
+  }, [historiaId, contextoInicial]);
 
   const sendMessage = () => {
     if (!input.trim() || !userTurn) return;
 
     const newMessage = { author: "user", text: input, time: formatTime() };
-    setMessages((prev) => [...prev, newMessage]);
+    const updatedMessages = [...messages, newMessage];
+    setMessages(updatedMessages);
     setInput("");
     setUserTurn(false);
 
     const payload =
       modo === "contexto"
-        ? { contexto: input }
-        : { contexto: messages.map((m) => m.text).join("\n"), acao: input };
+        ? { historia_id: historiaId, contexto: input }
+        : { historia_id: historiaId, contexto: messages.map((m) => m.text).join("\n"), acao: input };
 
     const url =
       modo === "contexto"

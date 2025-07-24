@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv() # Carrega as variáveis de ambiente do arquivo .env
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")  # Obtém a chave da API do ambiente
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") # Obtém a chave da API do ambiente
 print("GOOGLE_API_KEY no gemini_service:", GOOGLE_API_KEY) # Verifica se a chave foi carregada corretamente
 
 # Configure a chave da API
@@ -27,39 +27,58 @@ def obter_resposta_do_mestre(contexto, acao=None):
         "- O jogador começa no nível 1. O nível máximo é 20.\n"
         "- Você é o Mestre do Jogo (DM). Guie a narrativa de forma imersiva e responsiva às ações do jogador.\n"
         "- Considere as implicações lógicas das ações do jogador no mundo.\n"
+        "- A resposta do mestre (incluindo Dificuldade, Rolagem, Resultado imediato, Consequências e Próximas opções) deve ter no máximo 65 palavras.\n"
         "- SISTEMA DE DIFICULDADE:\n"
-        "  * Ação fácil: Dificuldade 7\n"
-        "  * Ação moderada: Dificuldade 10\n"
-        "  * Ação difícil: Dificuldade 18\n"
-        "  * Ação quase impossível: Dificuldade 25\n"
-        "- Para qualquer ação (luta, construção, negociação, etc):\n"
-        "  * Primeiro mostre: 'Dificuldade da sua ação: [valor]'\n"
-        "  * Depois mostre: 'Resultado da Rolagem de dados: [valor]'\n"
-        "  * Se rolagem ≥ dificuldade: ação bem-sucedida\n"
-        "  * Se rolagem < dificuldade: ação falha com punição\n"
+        "   * Ação fácil: Dificuldade 7\n"
+        "   * Ação moderada: Dificuldade 12\n"
+        "   * Ação difícil: Dificuldade 18\n"
+        "   * Ação quase impossível: Dificuldade 25\n"
+        "- Para qualquer ação (luta, construção, negociação, etc) que necessite de rolagem:\n"
+        "   * Primeiro mostre: 'Dificuldade: [valor]'\n"
+        "   * Pule de linha\n"
+        "   * Depois mostre: 'Rolagem: [valor]'\n"
+        "   * Pule de linha\n"
+        "   * Se rolagem ≥ dificuldade: ação bem-sucedida\n"
+        "   * Se rolagem < dificuldade: ação falha com punição\n"
         "- Punições podem ser: dano, perda de recursos, ou consequência narrativa negativa\n"
         "- Perguntas não requerem rolagem.\n"
-        "- Ações impossíveis: responda 'Sua força não é suficiente para isso' com punição\n"
+        "- Ações básicas não necessitam de Rolagem de dados. Considere sucesso independente. Exemplos: observar alguém, entrar em um local, deitar na cama, conversar com alguém.\n"
+        "- Ao sair de um combate, a mensagem 'Descanse em algum lugar para sua vida voltar a 100%' deve ser exibida.\n"
+        "- Ações sem sentido para o contexto do jogo: responda 'Por favor, mande uma entrada correta.'\n"
+        "- O jogador tem 100 pontos de vida. Se chegar a zero, é game over. Descansar recupera a vida totalmente.\n"
         "- FORMATO DA RESPOSTA:\n"
-        "  [Dificuldade e rolagem como especificado acima]\n"
-        "  [Resultado imediato da ação]\n"
-        "  [Consequências no ambiente]\n"
-        "  [Próximas opções]\n"
-        "- Limite de 150 palavras.\n"
+        "   [Dificuldade e rolagem como especificado acima, se aplicável]\n"
+        "   [Resultado imediato da ação (máximo 55 palavras para esta seção, consequências e próximas opções combinadas)]\n"
+        "   [Consequências no ambiente]\n"
+        "   [Próximas opções]\n"
         "\n"
     )
 
-    # Sistema de rolagem para ações (exceto perguntas)
+    # Lista de ações que não requerem rolagem
+    acoes_basicas_sucesso_automatico = [
+        "observar", "entrar", "deitar", "conversar", "falar", "olhar", "ouvir", "andar", "correr", "sentar", "levantar", "dormir"
+    ]
+
     rolagem = None
     dificuldade = 15  # Dificuldade padrão (moderada)
     
-    if acao and not acao.strip().endswith('?'):
+    # Verifica se a ação requer rolagem
+    acao_requer_rolagem = True
+    if acao:
+        acao_normalizada = acao.strip().lower()
+        if acao_normalizada.endswith('?'):
+            acao_requer_rolagem = False
+        else:
+            for termo in acoes_basicas_sucesso_automatico:
+                if termo in acao_normalizada:
+                    acao_requer_rolagem = False
+                    break
+
+    if acao_requer_rolagem:
         rolagem = Rolagem_de_dados()
         prompt += (
-            f"=== DADOS DA AÇÃO ===\n"
-            f"Dificuldade da sua ação: {dificuldade}\n"
-            f"Resultado da Rolagem de dados: {rolagem}\n"
-            f"Tipo de resultado: {'SUCESSO' if rolagem >= dificuldade else 'FALHA'}\n\n"
+            f"Dificuldade: {dificuldade}\n"
+            f"Rolagem: {rolagem}\n"
         )
 
     prompt += f"Contexto atual:\n{contexto.strip()}\n\n"

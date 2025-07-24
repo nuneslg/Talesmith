@@ -11,7 +11,9 @@ class Historia(db.Model):
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     criada_em = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
+    atributos = db.relationship('AtributosPersonagem', uselist=False, backref='historia', cascade="all, delete")
     mensagens = db.relationship('Mensagem', backref='historia', lazy=True)
+    usuario = db.relationship('Usuario', backref='historias')
 
 
 from app.models.message import Mensagem 
