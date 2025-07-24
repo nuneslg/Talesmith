@@ -9,12 +9,14 @@ import RegisterPage from './pages/register/RegisterPage'
 
 import '@mantine/core/styles.layer.css';
 import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import './index.css'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MantineProvider>
+      <Notifications position='top-right'/>
       <BrowserRouter>
         <Routes>
           <Route path="register" element={<RegisterPage/>}/>

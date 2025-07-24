@@ -1,9 +1,11 @@
-Você observa o campo de batalha. A clareira é cercada por árvores densas, sem sinal de rotas de fuga fáceis. Há pedras soltas no chão.
 
-A clareira oferece pouca cobertura além das pedras. A floresta parece impenetrável.
+VocÃª observa o campo de batalha. A clareira Ã© cercada por Ã¡rvores densas, sem sinal de rotas de fuga fÃ¡ceis. HÃ¡ pedras soltas no chÃ£o.
 
-O que você faz?
+A clareira oferece pouca cobertura alÃ©m das pedras. A floresta parece impenetrÃ¡vel.
+
+O que vocÃª faz?
 1. Atacar Noxus.
 2. Defender-se.
 3. Tentar fugir.
 4. Usar as pedras.
+
