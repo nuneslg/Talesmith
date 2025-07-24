@@ -1,6 +1,6 @@
 const ChatBubble = ({ text, author, time }) => {
 
-  const isUser = author === "user";
+  const isUser = (author || "").toLowerCase() === "jogador";
   const alignment = isUser ? "justify-end" : "justify-start";
   const bubbleStyle = isUser ? "bg-orange-300 text-black rounded-br-none" : "bg-yellow-100 text-black rounded-bl-none";
 

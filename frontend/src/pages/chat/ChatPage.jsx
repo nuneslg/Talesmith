@@ -22,54 +22,56 @@ const ChatPage = () => {
   const jaBuscouCenaInicial = useRef(false);
 
   useEffect(() => {
-    if (!historiaId || !contextoInicial || !isNew) return;
-    if (jaBuscouCenaInicial.current) return; // se já buscou, não faz nada
+    if (!historiaId || !contextoInicial) return;
 
-    jaBuscouCenaInicial.current = true; // marca que já fez a requisição
+    // História nova → busca cena inicial
+    if (isNew && !jaBuscouCenaInicial.current) {
+      jaBuscouCenaInicial.current = true; // marca que já fez a requisição
 
-    console.log("🔁 Buscando cena-inicial...");
+      console.log("🔁 Buscando cena-inicial...");
 
-    // Chama backend para primeira mensagem da IA (baseada no contexto da história)
-    fetch("http://localhost:5000/api/cena-inicial", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ historia_id: historiaId, contexto: contextoInicial }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const response = {
-          author: "ia",
-          text: data.resposta,
-          time: formatTime(),
-        };
-        setMessages([response]); // inicia só com essa mensagem
-        setUserTurn(true);
+      // Chama backend para primeira mensagem da IA 
+      fetch("http://localhost:5000/api/cena-inicial", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ historia_id: historiaId, contexto: contextoInicial }),
       })
-      .catch((err) => {
-        console.error("Erro no backend:", err);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          const response = {
+            author: "mestre",
+            text: data.resposta,
+            time: formatTime(),
+          };
+          setMessages([response]); // inicia só com essa mensagem
+          setUserTurn(true);
+        })
+        .catch((err) => {
+          console.error("Erro no backend:", err);
+        });
+    }
 
-      // História existente → busca mensagens salvas no banco
-  if (!isNew) {
-    fetch(`http://localhost:5000/api/mensagens/${historiaId}`)
-      .then((res) => res.json())
-      .then((mensagensDoBanco) => {
-        const msgs = mensagensDoBanco.map((m) => ({
-          author: m.autor, // "user" ou "ia"
-          text: m.texto,
-          time: formatTime(m.data), // você pode formatar se quiser, ou usar direto
-        }));
-        setMessages(msgs);
-        setUserTurn(true);
-      })
-      .catch((err) => console.error("Erro ao buscar mensagens salvas:", err));
-  }
+    // História existente → busca mensagens salvas no banco
+    if (!isNew) {
+      fetch(`http://localhost:5000/api/mensagens/${historiaId}`)
+        .then((res) => res.json())
+        .then((mensagensDoBanco) => {
+          const msgs = mensagensDoBanco.map((m) => ({
+            author: m.autor, // "user" ou "ia"
+            text: m.conteudo,
+            time: formatTime(m.data), 
+          }));
+          setMessages(msgs);
+          setUserTurn(true);
+        })
+        .catch((err) => console.error("Erro ao buscar mensagens salvas:", err));
+    }
 }, [historiaId, contextoInicial, isNew]);
 
   const sendMessage = () => {
     if (!input.trim() || !userTurn) return;
 
-    const newMessage = { author: "user", text: input, time: formatTime() };
+    const newMessage = { author: "jogador", text: input, time: formatTime() };
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
     setInput("");
@@ -99,7 +101,7 @@ const ChatPage = () => {
       .then((res) => res.json())
       .then((data) => {
         const response = {
-          author: "ia",
+          author: "mestre",
           text: data.resposta,
           time: formatTime(),
         };
@@ -110,7 +112,7 @@ const ChatPage = () => {
       .catch((error) => {
         console.error("Erro ao chamar backend:", error);
         const response = {
-          author: "ia",
+          author: "mestre",
           text: "Erro na comunicação com o servidor.",
           time: formatTime(),
         };
@@ -134,7 +136,12 @@ const ChatPage = () => {
 
       <div className="flex flex-col h-[80%] mb-4 overflow-y-auto justify-items-end">
         {messages.map((msg, i) => (
-          <ChatBubble key={i} text={msg.text} author={msg.author} time={msg.time} />
+          <ChatBubble 
+          key={i} 
+          text={msg.text} 
+          author={msg.author} 
+          time={msg.time} 
+          />
         ))}
         <div ref={messagesEndRef} />
       </div>

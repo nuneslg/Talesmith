@@ -21,13 +21,13 @@ def criar_mensagem(historia_id):
 
 @mensagem_bp.route('/<int:historia_id>', methods=['GET'])
 def listar_mensagens(historia_id):
-    mensagens = Mensagem.query.filter_by(historia_id=historia_id).order_by(Mensagem.enviada_em.asc()).all()
+    mensagens = Mensagem.query.filter_by(historia_id=historia_id).order_by(Mensagem.criada_em.asc()).all()
     return jsonify([
         {
             'id': m.id,
             'autor': m.remetente,
             'conteudo': m.conteudo,
-            'enviada_em': m.criada_em.isoformat()
+            'criada_em': m.criada_em.isoformat()
         }
         for m in mensagens
     ])
