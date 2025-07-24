@@ -1,3 +1,11 @@
-Entendo, você é um plebeu em dificuldades. A vida não tem sido fácil, e cada dia é uma luta pela sobrevivência. Você se encontra em uma encruzilhada empoeirada, com o sol castigando sua pele. À sua frente, um caminho leva à cidade murada de Grimhaven, conhecida por sua riqueza e oportunidades... e também por sua exploração dos mais pobres. À sua direita, uma trilha sinuosa desaparece em uma floresta densa, um lugar de mistérios e perigos desconhecidos. Atrás de você, a vastidão árida da sua antiga vida, sem nada a oferecer além de mais sofrimento.
+
+Você observa o campo de batalha. A clareira é cercada por árvores densas, sem sinal de rotas de fuga fáceis. Há pedras soltas no chão.
+
+A clareira oferece pouca cobertura além das pedras. A floresta parece impenetrável.
 
 O que você faz?
+1. Atacar Noxus.
+2. Defender-se.
+3. Tentar fugir.
+4. Usar as pedras.
+
