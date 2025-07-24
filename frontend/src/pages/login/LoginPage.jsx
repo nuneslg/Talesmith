@@ -8,6 +8,8 @@ import {
     Button,
     Stack,
 } from '@mantine/core';
+import { signIn } from '../../services/auth';
+import { notifications } from '@mantine/notifications';
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -19,7 +21,7 @@ export default function LoginPage() {
 
             password: (value) => {
                 if (value.length < 8) {
-                    return "Senha precisa ter 8 caracteres."
+                    return "Senha precisa ter no min 8 caracteres."
                 }
 
                 return null
@@ -36,9 +38,28 @@ export default function LoginPage() {
         },
     });
 
-    const handleSubmit = (values) => {
-        console.log('Dados enviados:', values);
-        navigate("/chat")
+    const handleSubmit = async (values) => {
+        
+        const user = await signIn({
+            email: values.email,
+            password: values.password
+        })
+
+        if(user){
+            notifications.show({
+                title: "Autenticado com sucesso!",
+                color: "orange",
+                autoClose: 4000
+            })
+
+            return navigate("/config", {state: {userId: user.id}})
+        }
+
+        notifications.show({
+            title: "Erro ao logar.",
+            color: "red",
+            autoClose: 4000
+        })
     };
 
     return (

@@ -8,26 +8,28 @@ import {
     Button,
     Stack,
 } from '@mantine/core';
+import { notifications } from "@mantine/notifications"
+import { signUp } from '../../services/auth';
 
 export default function RegisterPage() {
     const navigate = useNavigate()
     const form = useForm({
 
-        initialValues: { email: "", name: "", password: "", confirmPassword: ""},
+        initialValues: { email: "", name: "", password: "", confirmPassword: "" },
 
         validate: {
 
             password: (value) => {
                 if (value.length < 8) {
-                    return "Senha precisa ter 8 caracteres."
+                    return "Senha precisa ter no mínimo 8 caracteres."
                 }
 
                 return null
             },
 
             confirmPassword: (value, values) => {
-                if(value !== values.password){
-                    return "Senhas nao coincidem."
+                if (value !== values.password) {
+                    return "Senhas não coincidem."
                 }
 
                 return null
@@ -35,44 +37,44 @@ export default function RegisterPage() {
 
             email: (value) => {
                 if (!/^\S+@\S+$/.test(value)) {
-                    return "Email invalido."
+                    return "Email inválido."
                 }
 
                 return null
             }
 
-          
+
 
         },
     });
 
     const handleSubmit = async (values) => {
-    try {
-        const response = await fetch("http://localhost:5000/api/auth/signup", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: values.name,
-                email: values.email,
-                password: values.password,
-            }),
-        });
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Usuário criado:", data);
-            navigate("/config", { state: { userId: data.id } });  // ou outro comportamento
-        } else {
-            const erro = await response.json();
-            alert("Erro ao criar usuário: " + erro.erro);
+        const user = await signUp({
+            username: values.name,
+            email: values.email,
+            password: values.password,
+        })
+
+        if (user) {
+            
+            notifications.show({
+                color: "orange",
+                title: "Registrado com sucesso!",
+                autoClose: 4000
+            })
+
+            return navigate("/config", { state: { userId: user.id } })
         }
-    } catch (error) {
-        console.error("Erro na requisição:", error);
-        alert("Erro na rede ou no servidor.");
-    }
-};
+
+        notifications.show({
+            color: "red",
+            title: "Erro no registro.",
+            autoClose: 4000
+        })
+
+
+    };
 
     return (
         <section className="flex flex-col h-screen items-center bg-[url('images/background-wood.jpg')] bg-cover bg-center">
@@ -135,7 +137,7 @@ export default function RegisterPage() {
                                 h={50} radius="md"
                                 className='font-bold text-lg hover:opacity-80'
                             >
-                                Entrar
+                                Registrar
                             </Button>
                         </Stack>
                     </form>
