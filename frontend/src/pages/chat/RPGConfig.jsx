@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import fundo from './MadeiraFundo.jpg'
 
 function RPGConfig() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const userId = location.state?.userId
 
   const [form, setForm] = useState({
   titulo: '',
@@ -20,6 +22,8 @@ function RPGConfig() {
   carisma: '',
   contexto_personagem: ''
 })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -48,10 +52,15 @@ function RPGConfig() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    console.log("handleSubmit foi chamado")
+
+    if (isSubmitting) return // Evita múltiplos envios
+    setIsSubmitting(true)
+
     const payload = {
     titulo: form.titulo,
     contexto: form.historia,
-    usuario_id: 1, // substituir por ID do usuário logado
+    usuario_id: userId, 
 
     nome_personagem: form.nome,
     raca_personagem: form.raca,
@@ -91,7 +100,7 @@ function RPGConfig() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contexto: form.historia,
         historia_id: historiaId, // envia o ID da história criada
-       }) // ou outro contexto que queira enviar
+       })
     })
 
     const resultCena = await responseCena.json()

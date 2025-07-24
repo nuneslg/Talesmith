@@ -46,10 +46,33 @@ export default function RegisterPage() {
         },
     });
 
-    const handleSubmit = (values) => {
-        console.log('Dados enviados:', values);
-        navigate("/chat")
-    };
+    const handleSubmit = async (values) => {
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: values.name,
+                email: values.email,
+                password: values.password,
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Usuário criado:", data);
+            navigate("/config", { state: { userId: data.id } });  // ou outro comportamento
+        } else {
+            const erro = await response.json();
+            alert("Erro ao criar usuário: " + erro.erro);
+        }
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+        alert("Erro na rede ou no servidor.");
+    }
+};
 
     return (
         <section className="flex flex-col h-screen items-center bg-[url('images/background-wood.jpg')] bg-cover bg-center">

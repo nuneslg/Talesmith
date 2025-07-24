@@ -13,6 +13,7 @@ class Historia(db.Model):
 
     atributos = db.relationship('AtributosPersonagem', uselist=False, backref='historia', cascade="all, delete")
     mensagens = db.relationship('Mensagem', backref='historia', lazy=True)
+    usuario = db.relationship('Usuario', backref='historias')
 
 
 from app.models.message import Mensagem 

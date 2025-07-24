@@ -1,12 +1,1 @@
-Dificuldade da sua ação: 15
-Resultado da Rolagem de dados: 8
-
-Você tenta um armlock voador, um movimento arriscado demais para seu nível. Desequilibra-se, caindo desajeitadamente no tatame. Mestre Honório suspira.
-
-Você sente uma dor aguda no ombro. (Punição: -2 pontos de vida. Nível de dor aumenta). O Mestre se aproxima, o olhar mais sério agora. "A ambição é boa, mas a paciência é fundamental. Jiu-Jitsu é construído sobre fundamentos sólidos."
-
-**Próximas opções:**
-
-A) Desculpar-se com Mestre Honório e pedir para praticar o básico.
-B) Insistir que pode aprender movimentos avançados rapidamente.
-C) Ignorar a dor e tentar outro movimento arriscado.
+Jorginho, a poeira mágica cintila ao seu redor enquanto você esfrega o chão da vasta biblioteca do Mestre Elfo. Seus ouvidos élficos captam o murmúrio distante de um feitiço sendo conjurado. O cheiro de pergaminho velho e magia permeia o ar, mas em sua mente, paira o sonho da liberdade. O que você faz?

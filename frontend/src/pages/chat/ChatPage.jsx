@@ -6,6 +6,7 @@ import { formatTime } from "../../utils/time";
 const ChatPage = () => {
 
   const location = useLocation();
+  console.log("Location state:", location.state);
   const { historiaId, contextoInicial } = location.state || {};
 
   const [messages, setMessages] = useState([]);
@@ -14,8 +15,17 @@ const ChatPage = () => {
   const [modo, setModo] = useState("acao");
   const messagesEndRef = useRef(null);
 
+  const jaBuscouCenaInicial = useRef(false);
+
   useEffect(() => {
     if (!historiaId || !contextoInicial) return;
+
+    
+    if (jaBuscouCenaInicial.current) return; // se já buscou, não faz nada
+
+    jaBuscouCenaInicial.current = true; // marca que já fez a requisição
+
+    console.log("🔁 Buscando cena-inicial...");
 
     // Chama backend para primeira mensagem da IA (baseada no contexto da história)
     fetch("http://localhost:5000/api/cena-inicial", {
