@@ -48,7 +48,23 @@ const ChatPage = () => {
       .catch((err) => {
         console.error("Erro no backend:", err);
       });
-  }, [historiaId, contextoInicial]);
+
+      // História existente → busca mensagens salvas no banco
+  if (!isNew) {
+    fetch(`http://localhost:5000/api/mensagens/${historiaId}`)
+      .then((res) => res.json())
+      .then((mensagensDoBanco) => {
+        const msgs = mensagensDoBanco.map((m) => ({
+          author: m.autor, // "user" ou "ia"
+          text: m.texto,
+          time: formatTime(m.data), // você pode formatar se quiser, ou usar direto
+        }));
+        setMessages(msgs);
+        setUserTurn(true);
+      })
+      .catch((err) => console.error("Erro ao buscar mensagens salvas:", err));
+  }
+}, [historiaId, contextoInicial, isNew]);
 
   const sendMessage = () => {
     if (!input.trim() || !userTurn) return;

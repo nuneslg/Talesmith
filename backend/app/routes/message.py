@@ -18,15 +18,17 @@ def criar_mensagem(historia_id):
     db.session.commit()
     return jsonify({'id': nova_mensagem.id}), 201
 
+
 @mensagem_bp.route('/<int:historia_id>', methods=['GET'])
 def listar_mensagens(historia_id):
-    mensagens = Mensagem.query.filter_by(historia_id=historia_id).all()
+    mensagens = Mensagem.query.filter_by(historia_id=historia_id).order_by(Mensagem.enviada_em.asc()).all()
     return jsonify([
         {
             'id': m.id,
-            'autor': m.autor,
+            'autor': m.remetente,
             'conteudo': m.conteudo,
-            'enviada_em': m.enviada_em.isoformat()
+            'enviada_em': m.criada_em.isoformat()
         }
         for m in mensagens
     ])
+
