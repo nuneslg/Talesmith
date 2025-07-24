@@ -1,1 +1,9 @@
-Jorginho, a poeira mágica cintila ao seu redor enquanto você esfrega o chão da vasta biblioteca do Mestre Elfo. Seus ouvidos élficos captam o murmúrio distante de um feitiço sendo conjurado. O cheiro de pergaminho velho e magia permeia o ar, mas em sua mente, paira o sonho da liberdade. O que você faz?
+Você observa o campo de batalha. A clareira é cercada por árvores densas, sem sinal de rotas de fuga fáceis. Há pedras soltas no chão.
+
+A clareira oferece pouca cobertura além das pedras. A floresta parece impenetrável.
+
+O que você faz?
+1. Atacar Noxus.
+2. Defender-se.
+3. Tentar fugir.
+4. Usar as pedras.
