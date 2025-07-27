@@ -1,3 +1,11 @@
+# Code review - Talesmith
+
+## Visão Geral
+
+Este documento descreve como deve funcionar o processo de revisão de código no projeto
+
+---
+
 A revisão de código será conduzida por Luís Guilherme e Matheus Aléfe, responsáveis respectivamente pelas análises de PR no front-end e back-end. Ambos se voluntariaram para esta função devido aos seus cargos de gerencia na equipe.
 
 A escolha dos revisores baseou-se em estes já agirem como gerentes na equipe e terem maior experiencia em relação aos outros membros.
