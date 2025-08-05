@@ -2,7 +2,7 @@
 
 ## 🧱 Arquitetura do Projeto
 
-### Arquitetura geral: ** Monolítica em camadas - Frontend + Backend desacoplados (client-server)**
+### Arquitetura geral: **Monolítica em camadas - Frontend + Backend desacoplados (client-server)**
 
 ```
 [ React Frontend ]  <-->  [ Flask API Backend ]  <-->  [ Gemini LLM (via API) ]
