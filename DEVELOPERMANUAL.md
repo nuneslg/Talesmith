@@ -1,6 +1,6 @@
-# 🛠️ Talesmith – Developer Manual
+# Talesmith – Developer Manual
 
-## 🧱 Arquitetura do Projeto
+## Arquitetura do Projeto
 
 ### Arquitetura geral: **Monolítica em camadas - Frontend + Backend desacoplados (client-server)**
 
@@ -58,13 +58,13 @@
 
 ## Descrição das funções principais
 
-- 📂**BACK/ Chamada da API do Gemini: gemini_service.py**
+- **BACK/ Chamada da API do Gemini: gemini_service.py**
 
           obter_resposta_do_mestre(): Monta um prompt com regras de RPG e o contexto da história, o enviando para a API do gemini.
 
 Retorna o texto gerado como resposta da IA. Se houver erro na chamada da API, uma mensagem de erro personalizada é retornada.
 
-- 📂**BACK/ Receber contexto inicial e ações do jogador: routes.py**
+- **BACK/ Receber contexto inicial e ações do jogador: routes.py**
 
           cena-inicial(): recebe um contexto via POST e envia esse contexto para a LLM, que retorna a introdução da narrativa.
 
@@ -72,7 +72,7 @@ Retorna o texto gerado como resposta da IA. Se houver erro na chamada da API, um
 
 Ambas as rotas usam a função obter_resposta_do_mestre() para gerar o texto narrativo e devolvem a resposta em formato JSON. Essas rotas são integradas à aplicação Flask pela função init_routes(app).
 
-- 📂**FRONT/ Interação direta com o jogador: ChatPage.jsx**
+- **FRONT/ Interação direta com o jogador: ChatPage.jsx**
           
           sendMessage(): checa entre modo contexto e modo ação, controla o turno do usuário e envia o POST para o back.
 
