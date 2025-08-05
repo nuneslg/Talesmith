@@ -1,14 +1,8 @@
 # 🛠️ Talesmith – Developer Manual
 
-## 📖 Visão Geral
-
-Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-playing game) por meio de uma LLM (Large Language Model). Os jogadores interagem com uma interface amigável que traduz suas ações e escolhas em eventos narrativos dinâmicos conduzidos por IA.
-
----
-
 ## 🧱 Arquitetura do Projeto
 
-### Arquitetura geral: **Um monolítica em camadas - Frontend + Backend desacoplados (client-server)**
+### Arquitetura geral: ** Monolítica em camadas - Frontend + Backend desacoplados (client-server)**
 
 ```
 [ React Frontend ]  <-->  [ Flask API Backend ]  <-->  [ Gemini LLM (via API) ]
@@ -23,7 +17,7 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 🧰 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - **Python 3.10+**
@@ -36,7 +30,7 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 📦 Estrutura dos Diretórios
+## Estrutura dos Diretórios
 
 ```plaintext
 /
@@ -62,7 +56,7 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 📌 Descrição das funções principais
+## Descrição das funções principais
 
 - 📂**BACK/ Chamada da API do Gemini: gemini_service.py**
 
@@ -89,19 +83,19 @@ Retorna a estrutura e conteudos da pagina
 
 ---
 
-## 🚀 Como Executar o Projeto
+## Como Executar o Projeto
 
 Veja o arquivo `README.md` para saber como executar o projeto.
 
 ---
-## 🔬 Testes
+## Testes
 
 Veja o arquivo `TESTING.md` para saber como realizar os testes.
 
 ---
-## 🤝 Contribuição
+## Contribuição
 
 Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
 
 ---
-Atualizado pela ultima vez em 06/07/2025
+Atualizado pela ultima vez em 05/08/2025
