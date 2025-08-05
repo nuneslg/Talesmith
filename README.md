@@ -2,7 +2,9 @@
 
 Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-playing game) por meio de uma LLM (Large Language Model). Os jogadores interagem com uma interface amigável que traduz suas ações e escolhas em eventos narrativos dinâmicos conduzidos por IA.
 
-## Tecnologias
+Talesmith foi criado por alunos na UFPE como um projeto da disciplina Desenvolvimento de Software.
+
+## Tecnologias utilizadas
 
 - **Backend:** Python, Flask, integração com Gemini LLM (Google AI)
 - **Frontend:** React, Node.js
@@ -46,7 +48,7 @@ GEMINI_API_KEY=sua-chave-aqui
 
 ## Contribuindo
 
-Antes de contribuir, leia CONTRIBUTING.md e DEVELOPERMANUAL.md https://github.com/teamfortr3ss2/Talesmith/blob/main/DEVELOPERMANUAL.md para saber das convenções utilizadas e como funciona a estrutura do projeto.
+Antes de contribuir, leia [CONTRIBUTING.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/CONTRIBUTING.md) e [DEVELOPERMANUAL.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/DEVELOPERMANUAL.md) para saber das convenções utilizadas e entender como funciona a estrutura do projeto.
 
 ## Licença
 
