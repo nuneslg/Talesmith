@@ -85,17 +85,17 @@ Retorna a estrutura e conteudos da pagina
 
 ## Como Executar o Projeto
 
-Veja o arquivo `README.md` para saber como executar o projeto.
+Veja o arquivo [README.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/README.md) para saber como executar o projeto.
 
 ---
 ## Testes
 
-Veja o arquivo `TESTING.md` para saber como realizar os testes.
+Veja o arquivo [TESTING.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/TESTING.MD) para saber como realizar e são realizados os testes.
 
 ---
 ## Contribuição
 
-Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
+Antes de contribuir, leia [CONTRIBUTING.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/CONTRIBUTING.md) para saber das convenções utilizadas.
 
 ---
 Atualizado pela ultima vez em 05/08/2025
