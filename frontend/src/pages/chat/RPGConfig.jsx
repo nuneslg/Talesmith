@@ -77,7 +77,7 @@ function RPGConfig() {
   }
 
     try {
-      const responseHistoria = await fetch('http://localhost:5000/api/historias/', {
+      const responseHistoria = await fetch('https://talesmith.onrender.com/api/historias/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ function RPGConfig() {
     }
 
     // Agora faz a requisição para a cena inicial com o contexto da história
-    const responseCena = await fetch('http://localhost:5000/api/cena-inicial', {
+    const responseCena = await fetch('https://talesmith.onrender.com/api/cena-inicial', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contexto: form.historia,

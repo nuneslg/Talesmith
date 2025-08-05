@@ -11,7 +11,7 @@ function TelaInicial() {
   const [historias, setHistorias] = useState([])
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/historias?usuario_id=${userId}`)
+    fetch(`https://talesmith.onrender.com/api/historias?usuario_id=${userId}`)
       .then(res => {
         if (!res.ok) throw new Error('Erro ao buscar histórias')
         return res.json()

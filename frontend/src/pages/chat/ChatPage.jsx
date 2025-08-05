@@ -25,7 +25,7 @@ const ChatPage = () => {
     if (isNew && !jaBuscouCenaInicial.current) {
       jaBuscouCenaInicial.current = true;
 
-      fetch("http://localhost:5000/api/cena-inicial", {
+      fetch("https://talesmith.onrender.com/api/cena-inicial", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ historia_id: historiaId, contexto: contextoInicial }),
@@ -46,7 +46,7 @@ const ChatPage = () => {
     }
 
     if (!isNew) {
-      fetch(`http://localhost:5000/api/mensagens/${historiaId}`)
+      fetch(`https://talesmith.onrender.com/api/mensagens/${historiaId}`)
         .then((res) => res.json())
         .then((mensagensDoBanco) => {
           const msgs = mensagensDoBanco.map((m) => ({
@@ -82,8 +82,8 @@ const ChatPage = () => {
 
     const url =
       modo === "contexto"
-        ? "http://localhost:5000/api/cena-inicial"
-        : "http://localhost:5000/api/acao-jogador";
+        ? "https://talesmith.onrender.com/api/cena-inicial"
+        : "https://talesmith.onrender.com/api/acao-jogador";
 
     fetch(url, {
       method: "POST",
@@ -160,12 +160,12 @@ const ChatPage = () => {
   return (
     <div className="flex flex-col h-screen w-full p-4 bg-[url('images/background.png')] bg-cover bg-center">
       <button
-        onClick={startTour}
-        aria-label="Abrir tutorial do chat"
-        className="mb-6 px-4 py-2 bg-[#3B2918] hover:bg-[#2E1E13] active:bg-[#1A120C] focus:outline-none text-white rounded font-semibold transition-colors duration-300 cursor-pointer"
-      >
-        Como usar o chat
-      </button>
+      onClick={startTour}
+      aria-label="Abrir tutorial do chat"
+      className="mb-6 px-4 py-2 bg-[#3B2918] hover:bg-[#2E1E13] active:bg-[#1A120C] focus:outline-none text-white rounded font-semibold transition-colors duration-300 cursor-pointer"
+    >
+      Como usar o chat
+    </button>
 
       <div className="flex flex-row mb-4 justify-center">
         <div className="titulo-talesmith text-5xl max-w-[100%] text-orange-400 font-serif">
