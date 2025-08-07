@@ -8,84 +8,80 @@ import {
     Button,
     Stack,
 } from '@mantine/core';
-import { notifications } from "@mantine/notifications"
-import { signUp } from '../../services/auth';
+import { notifications } from "@mantine/notifications";
 
 export default function RegisterPage() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const form = useForm({
 
         initialValues: { email: "", name: "", password: "", confirmPassword: "" },
 
         validate: {
-
             password: (value) => {
                 if (value.length < 8) {
-                    return "Senha precisa ter no mínimo 8 caracteres."
+                    return "Senha precisa ter no mínimo 8 caracteres.";
                 }
-
-                return null
+                return null;
             },
 
             confirmPassword: (value, values) => {
                 if (value !== values.password) {
-                    return "Senhas não coincidem."
+                    return "Senhas não coincidem.";
                 }
-
-                return null
+                return null;
             },
 
             email: (value) => {
                 if (!/^\S+@\S+$/.test(value)) {
-                    return "Email inválido."
+                    return "Email inválido.";
                 }
-
-                return null
+                return null;
             }
-
-
-
         },
     });
 
     const handleSubmit = async (values) => {
+        try {
+            const response = await fetch("https://talesmith.onrender.com/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: values.name,
+                    email: values.email,
+                    password: values.password,
+                }),
+            });
 
-        const user = await signUp({
-            username: values.name,
-            email: values.email,
-            password: values.password,
-        })
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.erro || "Erro no registro");
+            }
 
-        if (user) {
-            
+            const user = await response.json();
+
             notifications.show({
                 color: "orange",
                 title: "Registrado com sucesso!",
-                autoClose: 4000
-            })
+                autoClose: 4000,
+            });
 
-            return navigate("/historias", { state: { userId: user.id } })
+            navigate("/historias", { state: { userId: user.id } });
+
+        } catch (error) {
+            notifications.show({
+                color: "red",
+                title: error.message || "Erro no registro.",
+                autoClose: 4000,
+            });
         }
-
-        notifications.show({
-            color: "red",
-            title: "Erro no registro.",
-            autoClose: 4000
-        })
-
-
     };
 
     return (
         <section className="flex flex-col h-screen items-center bg-[url('images/background-wood.jpg')] bg-cover bg-center">
-
-
             <div className="w-1/4 mt-32">
-
                 <Paper withBorder shadow="2lg" p={60} radius="md">
                     <form onSubmit={form.onSubmit(handleSubmit)}>
                         <Stack>
-
                             <Title align="center" mb="lg" shadow="xl" className="text-3xl font-bold text-orange-500">
                                 Registro
                             </Title>
@@ -96,7 +92,6 @@ export default function RegisterPage() {
                                 placeholder="seu nome"
                                 {...form.getInputProps('name')}
                                 required
-
                             />
 
                             <TextInput
@@ -105,7 +100,6 @@ export default function RegisterPage() {
                                 placeholder="seu@email.com"
                                 {...form.getInputProps('email')}
                                 required
-
                             />
 
                             <PasswordInput
