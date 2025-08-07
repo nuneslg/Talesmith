@@ -8,22 +8,18 @@ import {
     Button,
     Stack,
 } from '@mantine/core';
-import { signIn } from '../../services/auth';
 import { notifications } from '@mantine/notifications';
 
 export default function LoginPage() {
     const navigate = useNavigate()
     const form = useForm({
-
         initialValues: { email: "", password: "" },
 
         validate: {
-
             password: (value) => {
                 if (value.length < 8) {
                     return "Senha precisa ter no min 8 caracteres."
                 }
-
                 return null
             },
 
@@ -31,47 +27,53 @@ export default function LoginPage() {
                 if (!/^\S+@\S+$/.test(value)) {
                     return "Email invalido."
                 }
-
                 return null
             }
-
         },
     });
 
     const handleSubmit = async (values) => {
-        
-        const user = await signIn({
-            email: values.email,
-            password: values.password
-        })
+        try {
+            const response = await fetch("https://talesmith.onrender.com/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: values.email,
+                    password: values.password
+                }),
+            });
 
-        if(user){
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.erro || "Erro ao fazer login");
+            }
+
+            const user = await response.json();
+
             notifications.show({
                 title: "Autenticado com sucesso!",
                 color: "orange",
-                autoClose: 4000
-            })
+                autoClose: 4000,
+            });
 
-            return navigate("/historias", {state: {userId: user.id}})
+            navigate("/historias", { state: { userId: user.id } });
+        } catch (error) {
+            notifications.show({
+                title: error.message || "Erro ao logar.",
+                color: "red",
+                autoClose: 4000,
+            });
         }
-
-        notifications.show({
-            title: "Erro ao logar.",
-            color: "red",
-            autoClose: 4000
-        })
     };
 
     return (
         <section className="flex flex-col h-screen items-center bg-[url('images/background-wood.jpg')] bg-cover bg-center">
-
-
             <div className="w-1/4 mt-32">
-
                 <Paper withBorder shadow="2lg" p={60} radius="md">
                     <form onSubmit={form.onSubmit(handleSubmit)}>
                         <Stack>
-
                             <Title align="center" mb="lg" shadow="xl" className="text-3xl font-bold text-orange-500">
                                 Entrar
                             </Title>
@@ -82,7 +84,6 @@ export default function LoginPage() {
                                 placeholder="seu@email.com"
                                 {...form.getInputProps('email')}
                                 required
-
                             />
 
                             <PasswordInput
@@ -97,10 +98,11 @@ export default function LoginPage() {
                                 className="text-center text-md text-orange-500 font-bold cursor-pointer"
                                 onClick={() => navigate("/register")}
                             >
-                                Nao possui conta? Registre-se
+                                Não possui conta? Registre-se
                             </span>
 
-                            <Button type="submit"
+                            <Button
+                                type="submit"
                                 fullWidth mt="md"
                                 bg="orange" c="white"
                                 h={50} radius="md"
