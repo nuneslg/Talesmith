@@ -8,3 +8,4 @@ class Config:
         raw_uri = raw_uri.replace('postgres://', 'postgresql://', 1)
     SQLALCHEMY_DATABASE_URI = raw_uri or f"sqlite:///{os.path.join(basedir, 'talesmith.db')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = False
