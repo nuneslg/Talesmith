@@ -9,6 +9,8 @@ import {
     Stack,
 } from '@mantine/core';
 import { notifications } from "@mantine/notifications";
+import fundo from './MadeiraFundo.jpg';
+
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -77,7 +79,15 @@ export default function RegisterPage() {
     };
 
     return (
-        <section className="flex flex-col h-screen items-center bg-[url('images/background-wood.jpg')] bg-cover bg-center">
+        <section
+        className="flex flex-col h-screen items-center justify-center bg-cover bg-center"
+        style={{
+            backgroundImage: `url(${fundo})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+        }}
+        >
             <div className="w-1/4 mt-32">
                 <Paper withBorder shadow="2lg" p={60} radius="md">
                     <form onSubmit={form.onSubmit(handleSubmit)}>
