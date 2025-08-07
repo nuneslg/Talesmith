@@ -8,20 +8,20 @@ function RPGConfig() {
   const userId = location.state?.userId
 
   const [form, setForm] = useState({
-  titulo: '',
-  historia: '',
-  nome: '',
-  raca: '',
-  classe: '',
-  nivel: '',
-  forca: '',
-  destreza: '',
-  constituicao: '',
-  sabedoria: '',
-  inteligencia: '',
-  carisma: '',
-  contexto_personagem: ''
-})
+    titulo: '',
+    historia: '',
+    nome: '',
+    raca: '',
+    classe: '',
+    nivel: '',
+    forca: '',
+    destreza: '',
+    constituicao: '',
+    sabedoria: '',
+    inteligencia: '',
+    carisma: '',
+    contexto_personagem: ''
+  })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -32,8 +32,9 @@ function RPGConfig() {
 
   const renderSelect = (name, label) => (
     <div>
-      <label className="block text-lg mb-1">{label}</label>
+      <label htmlFor={name} className="block text-lg mb-1">{label}</label>
       <select
+        id={name}  // <-- id para associar ao label
         name={name}
         value={form[name]}
         onChange={handleChange}
@@ -52,29 +53,27 @@ function RPGConfig() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log("handleSubmit foi chamado")
-
-    if (isSubmitting) return // Evita múltiplos envios
+    if (isSubmitting) return
     setIsSubmitting(true)
 
     const payload = {
-    titulo: form.titulo,
-    contexto: form.historia,
-    usuario_id: userId, 
+      titulo: form.titulo,
+      contexto: form.historia,
+      usuario_id: userId,
 
-    nome_personagem: form.nome,
-    raca_personagem: form.raca,
-    classe_personagem: form.classe,
-    nivel_personagem: parseInt(form.nivel),
+      nome_personagem: form.nome,
+      raca_personagem: form.raca,
+      classe_personagem: form.classe,
+      nivel_personagem: parseInt(form.nivel),
 
-    forca_personagem: parseInt(form.forca),
-    destreza_personagem: parseInt(form.destreza),
-    constituicao_personagem: parseInt(form.constituicao),
-    sabedoria_personagem: parseInt(form.sabedoria),
-    inteligencia_personagem: parseInt(form.inteligencia),
-    carisma_personagem: parseInt(form.carisma),
-    contexto_personagem: form.contexto_personagem
-  }
+      forca_personagem: parseInt(form.forca),
+      destreza_personagem: parseInt(form.destreza),
+      constituicao_personagem: parseInt(form.constituicao),
+      sabedoria_personagem: parseInt(form.sabedoria),
+      inteligencia_personagem: parseInt(form.inteligencia),
+      carisma_personagem: parseInt(form.carisma),
+      contexto_personagem: form.contexto_personagem
+    }
 
     try {
       const responseHistoria = await fetch('https://talesmith.onrender.com/api/historias/', {
@@ -87,46 +86,44 @@ function RPGConfig() {
 
       const result = await responseHistoria.json()
       const historiaId = result.id
-      console.log('Resposta do servidor:', result)
 
-       if (!responseHistoria.ok) {
-      alert('Erro ao salvar a história: ' + resultHistoria.error)
-      return
-    }
+      if (!responseHistoria.ok) {
+        alert('Erro ao salvar a história: ' + result.error)
+        return
+      }
 
-    // Agora faz a requisição para a cena inicial com o contexto da história
-    const responseCena = await fetch('https://talesmith.onrender.com/api/cena-inicial', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contexto: form.historia,
-        historia_id: historiaId, // envia o ID da história criada
-       })
-    })
-
-    const resultCena = await responseCena.json()
-
-    if (!responseCena.ok) {
-      alert('Erro ao obter cena inicial: ' + resultCena.error)
-      return
-    }
-
-    console.log('Cena inicial:', resultCena.resposta)
-
-    
-    navigate('/chat', {
-      state: {
-        config: {
-          id: historiaId,
+      const responseCena = await fetch('https://talesmith.onrender.com/api/cena-inicial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           contexto: form.historia,
-        },
-        isNew: true,
-      },
-    });
+          historia_id: historiaId,
+        })
+      })
 
-  } catch (error) {
-    console.error('Erro na requisição:', error)
+      const resultCena = await responseCena.json()
+
+      if (!responseCena.ok) {
+        alert('Erro ao obter cena inicial: ' + resultCena.error)
+        return
+      }
+
+      navigate('/chat', {
+        state: {
+          config: {
+            id: historiaId,
+            contexto: form.historia,
+          },
+          isNew: true,
+        },
+      })
+
+    } catch (error) {
+      console.error('Erro na requisição:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
-}
 
   return (
     <div
@@ -146,8 +143,9 @@ function RPGConfig() {
 
         {/* Título */}
         <div>
-          <label className="block text-lg mb-1">Qual é o título do personagem?</label>
+          <label className="block text-lg mb-1" htmlFor="titulo">Qual é o título do personagem?</label>
           <textarea
+            id="titulo"
             name="titulo"
             value={form.titulo}
             onChange={handleChange}
@@ -159,8 +157,9 @@ function RPGConfig() {
 
         {/* Nome */}
         <div>
-          <label className="block text-lg mb-1">Qual é o nome do personagem?</label>
+          <label className="block text-lg mb-1" htmlFor="nome">Qual é o nome do personagem?</label>
           <textarea
+            id="nome"
             name="nome"
             value={form.nome}
             onChange={handleChange}
@@ -172,8 +171,9 @@ function RPGConfig() {
 
         {/* Raça */}
         <div>
-          <label className="block text-lg mb-1">Qual é a raça do personagem?</label>
+          <label className="block text-lg mb-1" htmlFor="raca">Qual é a raça do personagem?</label>
           <textarea
+            id="raca"
             name="raca"
             value={form.raca}
             onChange={handleChange}
@@ -185,8 +185,9 @@ function RPGConfig() {
 
         {/* Classe */}
         <div>
-          <label className="block text-lg mb-1">Qual é a classe do personagem?</label>
+          <label className="block text-lg mb-1" htmlFor="classe">Qual é a classe do personagem?</label>
           <select
+            id="classe"
             name="classe"
             value={form.classe}
             onChange={handleChange}
@@ -214,8 +215,9 @@ function RPGConfig() {
 
         {/* História */}
         <div>
-          <label className="block text-lg mb-1">Qual é a história do personagem?</label>
+          <label className="block text-lg mb-1" htmlFor="historia">Qual é a história do personagem?</label>
           <textarea
+            id="historia"
             name="historia"
             value={form.historia}
             onChange={handleChange}
@@ -228,6 +230,7 @@ function RPGConfig() {
         <button
           type="submit"
           className="w-full bg-yellow-700 hover:bg-yellow-800 text-white py-3 rounded-lg text-xl font-semibold transition duration-300"
+          disabled={isSubmitting}
         >
           Começar Aventura
         </button>
