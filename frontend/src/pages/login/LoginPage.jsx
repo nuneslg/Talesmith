@@ -98,7 +98,7 @@ export default function LoginPage() {
                             <PasswordInput
                                 label="Senha"
                                 size="lg"
-                                placeholder="••••••••"
+                                placeholder="digite sua senha"
                                 {...form.getInputProps('password')}
                                 required
                             />

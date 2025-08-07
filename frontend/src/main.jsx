@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from './App'
 import ChatPage from './pages/chat/ChatPage'
-import RPGConfig from './pages/chat/RPGConfig'
+import RPGConfig from './pages/config/RPGConfig'
 import HistoryPages from './pages/historias/HistoryPages'  // 👈 novo
 import LoginPage from './pages/login/LoginPage'
 import RegisterPage from './pages/register/RegisterPage'

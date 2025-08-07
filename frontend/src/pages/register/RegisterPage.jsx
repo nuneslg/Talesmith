@@ -115,7 +115,7 @@ export default function RegisterPage() {
                             <PasswordInput
                                 label="Senha"
                                 size="lg"
-                                placeholder="••••••••"
+                                placeholder="Digite sua senha"
                                 {...form.getInputProps('password')}
                                 required
                             />
@@ -123,7 +123,7 @@ export default function RegisterPage() {
                             <PasswordInput
                                 label="Confirme sua senha"
                                 size="lg"
-                                placeholder="••••••••"
+                                placeholder="Confirme sua senha"
                                 {...form.getInputProps('confirmPassword')}
                                 required
                             />
