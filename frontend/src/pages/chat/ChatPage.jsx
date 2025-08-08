@@ -158,7 +158,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full p-4 bg-[url('images/background.png')] bg-cover bg-center">
+    <div className="flex flex-col h-screen w-full p-4 bg-[url('/images/background.png')] bg-cover bg-center">
       <button
       onClick={startTour}
       aria-label="Abrir tutorial do chat"
