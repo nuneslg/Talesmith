@@ -4,6 +4,8 @@ from .user import user_bp
 from .gemini import gemini_bp
 from .auth import auth_bp
 from .signup import signup_bp
+from flask import Blueprint
+from .db import db_bp
 
 def register_blueprints(app):
     app.register_blueprint(historia_bp)
@@ -12,3 +14,4 @@ def register_blueprints(app):
     app.register_blueprint(gemini_bp)
     app.register_blueprint(auth_bp) 
     app.register_blueprint(signup_bp) 
+    app.register_blueprint(db_bp)  

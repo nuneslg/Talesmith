@@ -158,7 +158,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full p-4 bg-[url('images/background.png')] bg-cover bg-center">
+    <div className="flex flex-col h-screen w-full p-4 bg-[url('/images/background.png')] bg-cover bg-center">
       <button
       onClick={startTour}
       aria-label="Abrir tutorial do chat"
@@ -168,12 +168,12 @@ const ChatPage = () => {
     </button>
 
       <div className="flex flex-row mb-4 justify-center">
-        <div className="titulo-talesmith text-5xl max-w-[100%] text-orange-400 font-serif">
+        <div className="titulo-talesmith text-5xl sm:text-4xl text-center text-orange-400 font-serif break-words">
           Talesmith
         </div>
       </div>
 
-      <div className="chat-messages flex flex-col h-[80%] mb-4 overflow-y-auto justify-items-end">
+      <div className="chat-messages flex flex-col flex-1 min-h-0 mb-4 overflow-y-auto">
         {messages.map((msg, i) => (
           <ChatBubble key={i} text={msg.text} author={msg.author} time={msg.time} />
         ))}

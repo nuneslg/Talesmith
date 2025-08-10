@@ -8,109 +8,88 @@ import {
     Button,
     Stack,
 } from '@mantine/core';
-import { notifications } from "@mantine/notifications"
-import { signUp } from '../../services/auth';
+import { notifications } from "@mantine/notifications";
 
 export default function RegisterPage() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const form = useForm({
-
         initialValues: { email: "", name: "", password: "", confirmPassword: "" },
-
         validate: {
-
-            password: (value) => {
-                if (value.length < 8) {
-                    return "Senha precisa ter no mínimo 8 caracteres."
-                }
-
-                return null
-            },
-
-            confirmPassword: (value, values) => {
-                if (value !== values.password) {
-                    return "Senhas não coincidem."
-                }
-
-                return null
-            },
-
-            email: (value) => {
-                if (!/^\S+@\S+$/.test(value)) {
-                    return "Email inválido."
-                }
-
-                return null
-            }
-
-
-
+            password: (value) => (value.length < 8 ? "Senha precisa ter no mínimo 8 caracteres." : null),
+            confirmPassword: (value, values) =>
+                value !== values.password ? "Senhas não coincidem." : null,
+            email: (value) => (!/^\S+@\S+$/.test(value) ? "Email inválido." : null),
         },
     });
 
     const handleSubmit = async (values) => {
+        try {
+            const response = await fetch("https://talesmith.onrender.com/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: values.name,
+                    email: values.email,
+                    password: values.password,
+                }),
+            });
 
-        const user = await signUp({
-            username: values.name,
-            email: values.email,
-            password: values.password,
-        })
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.erro || "Erro no registro");
+            }
 
-        if (user) {
-            
+            const user = await response.json();
+
             notifications.show({
                 color: "orange",
                 title: "Registrado com sucesso!",
-                autoClose: 4000
-            })
+                autoClose: 4000,
+            });
 
-            return navigate("/historias", { state: { userId: user.id } })
+            navigate("/historias", { state: { userId: user.id } });
+        } catch (error) {
+            notifications.show({
+                color: "red",
+                title: error.message || "Erro no registro.",
+                autoClose: 4000,
+            });
         }
-
-        notifications.show({
-            color: "red",
-            title: "Erro no registro.",
-            autoClose: 4000
-        })
-
-
     };
 
     return (
-        <section className="flex flex-col h-screen items-center bg-[url('images/background-wood.jpg')] bg-cover bg-center">
-
-
-            <div className="w-1/4 mt-32">
-
-                <Paper withBorder shadow="2lg" p={60} radius="md">
+        <section className="flex flex-col h-screen items-center justify-center bg-[url('/images/background-wood.jpg')] bg-cover bg-center px-4">
+            <div className="w-full max-w-md sm:max-w-lg md:max-w-md lg:max-w-sm">
+                <Paper withBorder shadow="lg" p="xl" radius="md">
                     <form onSubmit={form.onSubmit(handleSubmit)}>
-                        <Stack>
-
-                            <Title align="center" mb="lg" shadow="xl" className="text-3xl font-bold text-orange-500">
+                        <Stack spacing="md">
+                            <Title
+                                align="center"
+                                mb="md"
+                                className="text-3xl font-bold text-orange-500"
+                            >
                                 Registro
                             </Title>
 
                             <TextInput
                                 label="Nome"
-                                size="lg"
+                                size="md"
                                 placeholder="seu nome"
                                 {...form.getInputProps('name')}
                                 required
-
                             />
 
                             <TextInput
                                 label="E-mail"
-                                size="lg"
+                                size="md"
                                 placeholder="seu@email.com"
                                 {...form.getInputProps('email')}
                                 required
-
                             />
 
                             <PasswordInput
                                 label="Senha"
-                                size="lg"
+                                size="md"
                                 placeholder="••••••••"
                                 {...form.getInputProps('password')}
                                 required
@@ -118,24 +97,27 @@ export default function RegisterPage() {
 
                             <PasswordInput
                                 label="Confirme sua senha"
-                                size="lg"
+                                size="md"
                                 placeholder="••••••••"
                                 {...form.getInputProps('confirmPassword')}
                                 required
                             />
 
                             <span
-                                className="text-center text-md text-orange-500 font-bold cursor-pointer"
+                                className="text-center text-md text-orange-500 font-bold cursor-pointer hover:underline"
                                 onClick={() => navigate("/login")}
                             >
-                                Ja possui conta ? Entre
+                                Já possui conta? Entre
                             </span>
 
-                            <Button type="submit"
-                                fullWidth mt="md"
-                                bg="orange" c="white"
-                                h={50} radius="md"
-                                className='font-bold text-lg hover:opacity-80'
+                            <Button
+                                type="submit"
+                                fullWidth
+                                mt="md"
+                                color="orange"
+                                radius="md"
+                                size="md"
+                                className="font-bold text-lg hover:opacity-80"
                             >
                                 Registrar
                             </Button>

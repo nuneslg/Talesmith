@@ -58,3 +58,7 @@ def acao_jogador():
     db.session.commit()
 
     return jsonify({'resposta': resposta})
+    
+@gemini_bp.route('/teste', methods=['GET'])
+def teste():
+    return jsonify({"status": "ok", "mensagem": "API funcionando no Render"})
