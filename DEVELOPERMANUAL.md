@@ -1,14 +1,8 @@
-# 🛠️ Talesmith – Developer Manual
+# Talesmith – Developer Manual
 
-## 📖 Visão Geral
+## Arquitetura do Projeto
 
-Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-playing game) por meio de uma LLM (Large Language Model). Os jogadores interagem com uma interface amigável que traduz suas ações e escolhas em eventos narrativos dinâmicos conduzidos por IA.
-
----
-
-## 🧱 Arquitetura do Projeto
-
-### Arquitetura geral: **Um monolítica em camadas - Frontend + Backend desacoplados (client-server)**
+### Arquitetura geral: **Monolítica em camadas - Frontend + Backend desacoplados (client-server)**
 
 ```
 [ React Frontend ]  <-->  [ Flask API Backend ]  <-->  [ Gemini LLM (via API) ]
@@ -23,7 +17,7 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 🧰 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - **Python 3.10+**
@@ -36,7 +30,7 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 📦 Estrutura dos Diretórios
+## Estrutura dos Diretórios
 
 ```plaintext
 /
@@ -62,15 +56,15 @@ Talesmith é uma aplicação web interativa que simula um mestre de RPG (role-pl
 
 ---
 
-## 📌 Descrição das funções principais
+## Descrição das funções principais
 
-- 📂**BACK/ Chamada da API do Gemini: gemini_service.py**
+- **BACK/ Chamada da API do Gemini: gemini_service.py**
 
           obter_resposta_do_mestre(): Monta um prompt com regras de RPG e o contexto da história, o enviando para a API do gemini.
 
 Retorna o texto gerado como resposta da IA. Se houver erro na chamada da API, uma mensagem de erro personalizada é retornada.
 
-- 📂**BACK/ Receber contexto inicial e ações do jogador: routes.py**
+- **BACK/ Receber contexto inicial e ações do jogador: routes.py**
 
           cena-inicial(): recebe um contexto via POST e envia esse contexto para a LLM, que retorna a introdução da narrativa.
 
@@ -78,7 +72,7 @@ Retorna o texto gerado como resposta da IA. Se houver erro na chamada da API, um
 
 Ambas as rotas usam a função obter_resposta_do_mestre() para gerar o texto narrativo e devolvem a resposta em formato JSON. Essas rotas são integradas à aplicação Flask pela função init_routes(app).
 
-- 📂**FRONT/ Interação direta com o jogador: ChatPage.jsx**
+- **FRONT/ Interação direta com o jogador: ChatPage.jsx**
           
           sendMessage(): checa entre modo contexto e modo ação, controla o turno do usuário e envia o POST para o back.
 
@@ -89,19 +83,19 @@ Retorna a estrutura e conteudos da pagina
 
 ---
 
-## 🚀 Como Executar o Projeto
+## Como Executar o Projeto
 
-Veja o arquivo `README.md` para saber como executar o projeto.
-
----
-## 🔬 Testes
-
-Veja o arquivo `TESTING.md` para saber como realizar os testes.
+Veja o arquivo [README.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/README.md) para saber como executar o projeto.
 
 ---
-## 🤝 Contribuição
+## Testes
 
-Antes de contribuir, leia `CONTRIBUTING.md` para saber das convenções utilizadas.
+Veja o arquivo [TESTING.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/TESTING.MD) para saber como realizar e são realizados os testes.
 
 ---
-Atualizado pela ultima vez em 06/07/2025
+## Contribuição
+
+Antes de contribuir, leia [CONTRIBUTING.md](https://github.com/teamfortr3ss2/Talesmith/blob/main/CONTRIBUTING.md) para saber das convenções utilizadas.
+
+---
+Atualizado pela ultima vez em 05/08/2025

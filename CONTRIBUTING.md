@@ -1,10 +1,10 @@
-# Guia de Contribuição - Projeto Flask
+# Talesmith - Guia de Contribuição
 
 Este documento orienta sobre como contribuir com nosso projeto de forma clara, organizada e padronizada.
 
 ---
 
-## ✅ Fluxo de colaboração no repositório
+## Fluxo de colaboração no repositório
 
 1. **Criação de issues**:
    - Use issues para relatar bugs, sugerir melhorias ou iniciar discussões.
@@ -26,7 +26,7 @@ Este documento orienta sobre como contribuir com nosso projeto de forma clara, o
 
 ---
 
-## 🌿 Convenções de nomes de branches
+## Convenções de nomes de branches
 
 - `main`: versão estável e pronta para produção.
 - `dev`: integração de funcionalidades em desenvolvimento.
@@ -36,7 +36,7 @@ Este documento orienta sobre como contribuir com nosso projeto de forma clara, o
 
 ---
 
-## 💬 Convenções de mensagens de commit
+## Convenções de mensagens de commit
 
 Usamos mensagens claras e devem seguir o seguinte padrão:
 
@@ -60,7 +60,7 @@ Breve descrição do que foi feito, com verbos no infinitivo sem conjunção (ex
 - Exemplo de commit: "feat(rotas): criar endpoint de listagem de usuários"
 ---
 
-## 🔍 Regras para revisar código
+## Regras para revisar código
 
 - Todo código novo ou alterado deve passar por revisão antes do merge.
 - Comentários devem ser respeitosos e com foco na melhoria do projeto.
@@ -70,38 +70,30 @@ Breve descrição do que foi feito, com verbos no infinitivo sem conjunção (ex
 
 ---
 
-## ⚙️ Como configurar o projeto localmente
+## Como rodar o projeto
 
 ### Pré-requisitos
 
-- Python 3.10 ou superior
-- `pip` instalado
+- Python 3.10+
+- Node.js 18+
+- npm ou yarn
 
-### Passos
+### Backend
 
-1. Clone o repositório:
 ```bash
-git clone https://github.com/nuneslg/Talesmith.git
-cd Talesmith
-```
-
-2. Crie e ative um ambiente virtual:
-```bash
+cd backend
 python -m venv venv
-source venv/bin/activate     # Linux/macOS
-venv\Scripts\activate        # Windows
-```
-
-3. Instale as dependências:
-- No diretório do backend:
-```bash
+source venv/bin/activate
 pip install -r requirements.txt
-```
-
-4. Execute a aplicação localmente:
-- No diretório do backend
-```bash
+# Configure as variáveis de ambiente em .env
+python init_db.py
 python run.py
 ```
 
+### Frontend
 
+```bash
+cd frontend
+npm install
+npm run dev
+```
