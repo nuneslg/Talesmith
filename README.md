@@ -15,8 +15,8 @@ Repositório monolítico contendo o backend em Python (Flask) e o frontend em Re
 
 ## Tecnologias
 
-- **Backend:** Python, Flask, integração com Gemini LLM (Google AI)
-- **Frontend:** React, Node.js
+- **Backend:** Python, Flask, integração com Gemini LLM (Google AI), Render, PostgreSQL
+- **Frontend:** React, Node.js, Shepherd.js
 
 ## Como rodar o projeto
 
